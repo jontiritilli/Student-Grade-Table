@@ -10,6 +10,7 @@ $(document).ready();
 /**
  * Define all global variables here.  
  */
+student_array = []
 /***********************
  * student_array - global array to hold student objects
  * @type {Array}
@@ -45,6 +46,7 @@ function addClickHandlersToElements(){
        none
  */
 function handleAddClicked(){
+	addStudent();
 }
 /***************************************************************************************************
  * handleCancelClicked - Event Handler when user clicks the cancel button, should clear out student form
@@ -53,6 +55,7 @@ function handleAddClicked(){
  * @calls: clearAddStudentFormInputs
  */
 function handleCancelClick(){
+	clearAddStudentFormInputs();
 }
 /***************************************************************************************************
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
@@ -61,11 +64,31 @@ function handleCancelClick(){
  * @calls clearAddStudentFormInputs, updateStudentList
  */
 function addStudent(){
+	var studentName = $('#studentName').val();
+	var studentCourse = $('#course').val();
+	var studentGrade = $('#studentGrade').val();
+	var tBody = $('tBody');
+	var newTR = $('<tr>');
+	var newTH = $('<th>');
+	var newBtn = $('<btn>').addClass('btn btn-danger').text('Delete');
+	var nameTH = newTH.text(studentName);
+	var courseTH = newTH.text(studentCourse);
+	var gradeTH = newTH.text(studentGrade);
+	newTR.appendTo(tBody);
+	nameTH.appendTo(newTR);
+	courseTH.appendTo(newTR);
+	gradeTH.appendTo(newTR);
+	newBtn.appendTo(newTR);
+
+	clearAddStudentFormInputs();
 }
 /***************************************************************************************************
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
 function clearAddStudentFormInputs(){
+	$('#studentName').val('');
+	$('#course').val('');
+	$('#studentGrade').val('');
 }
 /***************************************************************************************************
  * renderStudentOnDom - take in a student object, create html elements from the values and then append the elements
