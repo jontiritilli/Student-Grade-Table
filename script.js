@@ -5,7 +5,7 @@
 /**
  * Listen for the document to load and initialize the application
  */
-$(document).ready();
+$(document).ready(initializeApp);
 
 /**
  * Define all global variables here.  
@@ -67,35 +67,31 @@ function addStudent(){
 	var studentName = $('#studentName').val();
 	var studentCourse = $('#course').val();
 	var studentGrade = $('#studentGrade').val();
-	var tBody = $('tBody');
-	var newTR = $('<tr>');
-	var newTH = $('<th>');
-	var newBtn = $('<btn>').addClass('btn btn-danger').text('Delete');
-	var nameTH = newTH.text(studentName);
-	var courseTH = newTH.text(studentCourse);
-	var gradeTH = newTH.text(studentGrade);
-	newTR.appendTo(tBody);
-	nameTH.appendTo(newTR);
-	courseTH.appendTo(newTR);
-	gradeTH.appendTo(newTR);
-	newBtn.appendTo(newTR);
-
+	student_array.push({name: studentName, course: studentCourse, grade: studentGrade})
+	updateStudentList(student_array);
 	clearAddStudentFormInputs();
 }
 /***************************************************************************************************
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
+
 function clearAddStudentFormInputs(){
-	$('#studentName').val('');
-	$('#course').val('');
-	$('#studentGrade').val('');
+var inputIds = [
+	$('#studentName').val(''),
+	$('#course').val(''),
+	$('#studentGrade').val('')
+];
 }
 /***************************************************************************************************
  * renderStudentOnDom - take in a student object, create html elements from the values and then append the elements
  * into the .student_list tbody
  * @param {object} studentObj a single student object with course, name, and grade inside
  */
-function renderStudentOnDom(){
+function renderStudentOnDom(studentObj){
+	//insert row
+	var btnDelete = "<btn class='btn btn-danger'>Delete</btn>";
+	var newRow = '<tr><th>'+studentObj.name+'</th><th>'+studentObj.course+'</th><th>'+studentObj.grade+'</th><th>'+btnDelete+'</th></tr>';
+	$('tbody').append(newRow);
 }
 
 /***************************************************************************************************
@@ -104,22 +100,24 @@ function renderStudentOnDom(){
  * @returns {undefined} none
  * @calls renderStudentOnDom, calculateGradeAverage, renderGradeAverage
  */
-function updateStudentList(){
-  
+function updateStudentList(array){
+	renderStudentOnDom(array[array.length-1]);
+	var averageGrade = calculateGradeAverage(array);
+	renderGradeAverage(averageGrade);
 }
 /***************************************************************************************************
  * calculateGradeAverage - loop through the global student array and calculate average grade and return that value
  * @param: {array} students  the array of student objects
  * @returns {number}
  */
-function calculateGradeAverage(){
+function calculateGradeAverage(array){
 }
 /***************************************************************************************************
  * renderGradeAverage - updates the on-page grade average
  * @param: {number} average    the grade average
  * @returns {undefined} none
  */
-function renderGradeAverage(){
+function renderGradeAverage(average){
 }
 
 
