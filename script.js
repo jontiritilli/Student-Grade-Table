@@ -20,7 +20,17 @@ $(document).ready(initializeApp);
  *  { name: 'Jill', course: 'Comp Sci', grade: 85 }
  * ];
  */
-student_array = []
+student_array = [];
+/***********************
+ * student_array - global array to hold student objects
+ * @type {Array}
+ * example of student_array after input: 
+ * student_array = [
+ *  { name: 'Jake', course: 'Math', grade: 85 },
+ *  { name: 'Jill', course: 'Comp Sci', grade: 85 }
+ * ];
+ */
+counter = 0;
 /***************************************************************************************************
 * initializeApp 
 * @params {undefined} none
@@ -28,6 +38,7 @@ student_array = []
 * initializes the application, including adding click handlers and pulling in any data from the server, in later versions
 */
 function initializeApp(){
+	addClickHandlersToElements();
 }
 
 /***************************************************************************************************
@@ -37,6 +48,10 @@ function initializeApp(){
 *     
 */
 function addClickHandlersToElements(){
+	$('#table-body').on('click','button',function(){
+		var studentRow = $(this).closest('tr');
+		removeStudent(studentRow);
+	});
 }
 
 /***************************************************************************************************
@@ -67,9 +82,38 @@ function addStudent(){
 	var studentName = $('#studentName').val();
 	var studentCourse = $('#course').val();
 	var studentGrade = $('#studentGrade').val();
-	student_array.push({name: studentName, course: studentCourse, grade: studentGrade})
+	var currentID = counter;
+	student_array.push({name: studentName, course: studentCourse, grade: studentGrade, id: counter})
 	updateStudentList(student_array);
 	clearAddStudentFormInputs();
+	counter++;
+}
+/***************************************************************************************************
+ * removeStudent - removes a student object and recalculates the grade avearge based upon the revised student_array
+ * @param {undefined} none
+ * @return undefined
+ */
+function removeStudent(student){
+	var id = function(){
+		var arrayPositions = student_array.map(function(obj) {
+		  return parseInt(obj.id);
+		});
+		var num = parseInt(student.attr('num'));
+		for(var arrayPosIndex = 0; arrayPosIndex < arrayPositions.length; arrayPosIndex++){
+			if(arrayPositions[arrayPosIndex] === num){
+				return arrayPosIndex;
+			}
+		}
+	}();
+	student.remove();
+	student_array.splice(id,1);
+	if(student_array.length>0){
+		var averageGrade = calculateGradeAverage(student_array); //new average
+		renderGradeAverage(averageGrade);
+	} else {
+		renderGradeAverage(0);
+	}
+
 }
 /***************************************************************************************************
  * clearAddStudentForm - clears out the form values based on inputIds variable
@@ -88,8 +132,8 @@ var inputIds = [
  * @param {object} studentObj a single student object with course, name, and grade inside
  */
 function renderStudentOnDom(studentObj){
-	var btnDelete = "<btn class='btn btn-danger'>Delete</btn>";
-	var newRow = '<tr><th>'+studentObj.name+'</th><th>'+studentObj.course+'</th><th>'+studentObj.grade+'</th><th>'+btnDelete+'</th></tr>';
+	var btnDelete = "<button class='btn btn-danger'>Delete</button>";
+	var newRow = '<tr num='+counter+'><th>'+studentObj.name+'</th><th>'+studentObj.course+'</th><th>'+studentObj.grade+'</th><th>'+btnDelete+'</th></tr>';
 	$('tbody').append(newRow);
 }
 
@@ -128,7 +172,13 @@ function renderGradeAverage(average){
 	$('.avgGrade').text(average);
 }
 
-
-
-
-
+$(".student-add-form").validate({
+	rules: {
+		studentname: "required",
+		course: "required",
+		studentgrade: {
+			required: true,
+			number: true
+		}
+	}
+});
