@@ -10,7 +10,7 @@ $(document).ready(initializeApp);
 /**
  * Define all global variables here.  
  */
-student_array = []
+
 /***********************
  * student_array - global array to hold student objects
  * @type {Array}
@@ -20,7 +20,7 @@ student_array = []
  *  { name: 'Jill', course: 'Comp Sci', grade: 85 }
  * ];
  */
-
+student_array = []
 /***************************************************************************************************
 * initializeApp 
 * @params {undefined} none
@@ -88,7 +88,6 @@ var inputIds = [
  * @param {object} studentObj a single student object with course, name, and grade inside
  */
 function renderStudentOnDom(studentObj){
-	//insert row
 	var btnDelete = "<btn class='btn btn-danger'>Delete</btn>";
 	var newRow = '<tr><th>'+studentObj.name+'</th><th>'+studentObj.course+'</th><th>'+studentObj.grade+'</th><th>'+btnDelete+'</th></tr>';
 	$('tbody').append(newRow);
@@ -102,7 +101,7 @@ function renderStudentOnDom(studentObj){
  */
 function updateStudentList(array){
 	renderStudentOnDom(array[array.length-1]);
-	var averageGrade = calculateGradeAverage(array);
+	var averageGrade = calculateGradeAverage(student_array);
 	renderGradeAverage(averageGrade);
 }
 /***************************************************************************************************
@@ -111,6 +110,14 @@ function updateStudentList(array){
  * @returns {number}
  */
 function calculateGradeAverage(array){
+	var gradeList = array.map(function(obj) {
+	  return parseInt(obj.grade);
+	});
+	var getSum = function(total,num){
+		return total+num;
+	}
+	var number = gradeList.reduce(getSum)/gradeList.length
+	return number;
 }
 /***************************************************************************************************
  * renderGradeAverage - updates the on-page grade average
@@ -118,6 +125,7 @@ function calculateGradeAverage(array){
  * @returns {undefined} none
  */
 function renderGradeAverage(average){
+	$('.avgGrade').text(average);
 }
 
 
