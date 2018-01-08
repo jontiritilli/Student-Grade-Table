@@ -45,7 +45,7 @@ function addClickHandlersToElements(){
  * @return: 
        none
  */
-function handleAddClicked(){
+function handleAddClicked(event){
 	addStudent();
 }
 /***************************************************************************************************
