@@ -22,13 +22,8 @@ $(document).ready(initializeApp);
  */
 student_array = [];
 /***********************
- * student_array - global array to hold student objects
- * @type {Array}
- * example of student_array after input: 
- * student_array = [
- *  { name: 'Jake', course: 'Math', grade: 85 },
- *  { name: 'Jill', course: 'Comp Sci', grade: 85 }
- * ];
+ * counter - global variable to keep track of entries created
+ * @type {number}
  */
 counter = 0;
 /***************************************************************************************************
@@ -82,7 +77,6 @@ function addStudent(){
 	var studentName = $('#studentName').val();
 	var studentCourse = $('#course').val();
 	var studentGrade = $('#studentGrade').val();
-	var currentID = counter;
 	student_array.push({name: studentName, course: studentCourse, grade: studentGrade, id: counter})
 	updateStudentList(student_array);
 	clearAddStudentFormInputs();
