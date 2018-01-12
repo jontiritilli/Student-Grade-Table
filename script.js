@@ -5,7 +5,7 @@
 /**
  * Listen for the document to load and initialize the application
  */
-$(document).ready(initializeApp);
+// $(document).ready(initializeApp);
 
 /**
  * Define all global variables here.  
@@ -20,7 +20,7 @@ $(document).ready(initializeApp);
  *  { name: 'Jill', course: 'Comp Sci', grade: 85 }
  * ];
  */
-student_array = [];
+// student_array = [];
 /***********************
  * counter - global variable to keep track of entries created
  * @type {number}
@@ -32,9 +32,9 @@ student_array = [];
 * @returns: {undefined} none
 * initializes the application, including adding click handlers and pulling in any data from the server, in later versions
 */
-function initializeApp(){
-	addClickHandlersToElements();
-}
+// function initializeApp(){
+// 	// addClickHandlersToElements();
+// }
 
 /***************************************************************************************************
 * addClickHandlerstoElements
@@ -42,12 +42,12 @@ function initializeApp(){
 * @returns  {undefined}
 *     
 */
-function addClickHandlersToElements(){
+// function addClickHandlersToElements(){
 	// $('#table-body').on('click','button',function(){
 	// 	var studentRow = $(this).closest('tr');
 	// 	removeStudent(studentRow);
 	// });
-}
+// }
 
 /***************************************************************************************************
  * handleAddClicked - Event Handler when user clicks the add button
@@ -55,7 +55,7 @@ function addClickHandlersToElements(){
  * @return: 
        none
  */
-function handleAddClicked(event){
+function handleAddClicked(){
 	addStudent();
 }
 /***************************************************************************************************
@@ -101,9 +101,11 @@ function addStudent(){
 	if(endFunction===true){
 		return;
 	};
-	student_array.unshift({name: name, course: course, grade: grade})
-	$('tBody').empty();
-	updateStudentList(student_array);
+	// student_array.unshift({name: name, course: course, grade: grade})
+	var student = {name: name, course: course, grade: grade}
+	addData(student)
+	// $('tBody').empty();
+	// updateStudentList(student_array);
 	clearAddStudentFormInputs();
 }
 /***************************************************************************************************
@@ -112,10 +114,8 @@ function addStudent(){
  * @return undefined
  */
 function removeStudent(student){
-	var studentIndex = student_array.indexOf(student);
-	student_array.splice(studentIndex,1);
-	student.displayRow.remove();
-	calculateGradeAverage(student_array);
+	deleteData(student);
+	// student_array.splice(studentIndex,1);
 }
 /***************************************************************************************************
  * clearAddStudentForm - clears out the form values based on inputIds variable
@@ -193,11 +193,7 @@ function calculateGradeAverage(array){
  * @returns {undefined} none
  */
 function renderGradeAverage(average){
-	if(student_array.length > 0){
-		$('.avgGrade').text(average.toFixed(1));
-	} else {
-		$('.avgGrade').text(0);
-	}
+	$('.avgGrade').text(average.toFixed(1));
 }
 
 // $(".student-add-form").validate({
@@ -221,8 +217,61 @@ function getData(){
 		url: 'http://s-apis.learningfuze.com/sgt/get',
 		success: function(response){
 			console.log(response)
-			student_array = response.data;
-			updateStudentList(student_array);
+			updateStudentList(response.data);
+		}
+	}
+	$.ajax(ajaxConfig)
+}
+
+function addData(student){
+	var ajaxConfig = {
+		dataType: 'json',
+		data: {
+			api_key: '4q6Xvdec30',
+			name: student.name,
+			course: student.course,
+			grade: student.grade
+		},
+		method: 'POST',
+		url: 'http://s-apis.learningfuze.com/sgt/create',
+		success: function(response){
+			if (response['success'] === true){
+				console.log(response);
+				student.student_id = response.new_id;
+				renderStudentOnDom(student);
+			}
+		},
+		error: function(response){
+			if(response['success'] === false){
+				console.log(response);
+				$('.error').text(response);
+				$('.modal').fadeIn();
+			}
+		}
+	}
+	$.ajax(ajaxConfig)
+}
+
+function deleteData(student){
+	var ajaxConfig = {
+		dataType: 'json',
+		data: {
+			api_key: '4q6Xvdec30',
+			student_id: student.id
+		},
+		method: 'POST',
+		url: 'http://s-apis.learningfuze.com/sgt/delete',
+		success: function(response){
+			if(response['success'] === true)
+			console.log(response);
+			student.displayRow.remove();
+		},
+		error: function(response){
+			if(response['success'] === false){
+				console.log(response);
+				$('.error').text(response);
+				$('.modal').fadeIn();
+			}
 		}
 	}
 	$.ajax(ajaxConfig)
