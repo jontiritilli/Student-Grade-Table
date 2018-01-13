@@ -5,7 +5,7 @@
 /**
  * Listen for the document to load and initialize the application
  */
-// $(document).ready(initializeApp);
+$(document).ready(initializeApp);
 
 /**
  * Define all global variables here.  
@@ -32,9 +32,9 @@
 * @returns: {undefined} none
 * initializes the application, including adding click handlers and pulling in any data from the server, in later versions
 */
-// function initializeApp(){
-// 	// addClickHandlersToElements();
-// }
+function initializeApp(){
+	getData()
+}
 
 /***************************************************************************************************
 * addClickHandlerstoElements
@@ -74,38 +74,36 @@ function handleCancelClick(){
  * @calls clearAddStudentFormInputs, updateStudentList
  */
 function addStudent(){
-	var name = $('#studentName').val();
-	var course = $('#course').val();
-	var grade = $('#studentGrade').val();
+	var newStudent = {
+		name: $('#studentName').val(),
+		course: $('#course').val(),
+		grade: $('#studentGrade').val()
+	}
 	var endFunction = false;
-	if(name.length === 0){
+	if(newStudent.name.length < 2){
 		$('#studentName').val('Name Required');
 		endFunction = true;
 	};
-	if(course.length === 0){
+	if(newStudent.course.length < 2){
 		$('#course').val('Course Required');
 		endFunction = true;
 	};
-	if(isNaN(parseInt(grade))){
+	if(isNaN(parseInt(newStudent.grade))){
 		$('#studentGrade').val('Use Only Numbers');
 		endFunction = true;
 	};
-	if(grade.length === 0){
+	if(newStudent.grade.length === 0){
 		$('#studentGrade').val('Grade Required');
 		endFunction = true;
 	};
-	if(parseInt(grade) < 0 || parseInt(grade) > 100){
+	if(parseInt(newStudent.grade) < 0 || parseInt(newStudent.grade) > 100){
 		$('#studentGrade').val('Grade must be 0 - 100');
 		endFunction = true;
 	};
-	if(endFunction===true){
+	if(endFunction){
 		return;
-	};
-	// student_array.unshift({name: name, course: course, grade: grade})
-	var student = {name: name, course: course, grade: grade}
-	addData(student)
-	// $('tBody').empty();
-	// updateStudentList(student_array);
+	}
+	addData(newStudent);
 	clearAddStudentFormInputs();
 }
 /***************************************************************************************************
@@ -164,11 +162,15 @@ function renderStudentOnDom(student){
  * @returns {undefined} none
  * @calls renderStudentOnDom, calculateGradeAverage, renderGradeAverage
  */
+ var counter = 0;
+
 function updateStudentList(array){
+	$('#tBody').empty();
 	for(var studentIndex = 0; studentIndex< array.length; studentIndex ++){
 		(function () {
 			renderStudentOnDom(array[studentIndex]);
 		})();
+		
 	};
 	calculateGradeAverage(array);
 }
@@ -196,17 +198,6 @@ function renderGradeAverage(average){
 	$('.avgGrade').text(average.toFixed(1));
 }
 
-// $(".student-add-form").validate({
-// 	rules: {
-// 		studentname: "required",
-// 		course: "required",
-// 		studentgrade: {
-// 			required: true,
-// 			number: true
-// 		}
-// 	}
-// });
-
 function getData(){
 	var ajaxConfig = {
 		dataType: 'json',
@@ -216,9 +207,22 @@ function getData(){
 		method: 'POST',
 		url: 'http://s-apis.learningfuze.com/sgt/get',
 		success: function(response){
-			console.log(response)
-			updateStudentList(response.data);
-		}
+			if(response.success === true){
+				updateStudentList(response.data);
+			} else {
+				$('.modalHeader').text('Operation Failed');
+				$('.modalText').text(response.errors);
+				$('.modal').fadeIn();
+			}
+		},
+		error: function(response){
+			if (!response.success){
+				$('.modalHeader').text('Error!');
+				$('.modalText').text(response.statusText);
+				$('.modal').fadeIn();
+			}
+		},
+		timeout: 5000
 	}
 	$.ajax(ajaxConfig)
 }
@@ -235,19 +239,26 @@ function addData(student){
 		method: 'POST',
 		url: 'http://s-apis.learningfuze.com/sgt/create',
 		success: function(response){
-			if (response['success'] === true){
-				console.log(response);
-				student.student_id = response.new_id;
+			if (response.success){
+				student.id = response.new_id;
 				renderStudentOnDom(student);
+				$('.modalHeader').text('Success');
+				$('.modalText').text('Student was added to the database');
+				$('.modal').fadeIn();
+			} else {
+				$('.modalHeader').text('Operation Failed');
+				$('.modalText').text(response.errors);
+				$('.modal').fadeIn();
 			}
 		},
 		error: function(response){
-			if(response['success'] === false){
-				console.log(response);
-				$('.error').text(response);
+			if (!response.success){
+				$('.modalHeader').text('Error!');
+				$('.modalText').text(response.statusText);
 				$('.modal').fadeIn();
 			}
-		}
+		},
+		timeout: 5000
 	}
 	$.ajax(ajaxConfig)
 }
@@ -262,17 +273,25 @@ function deleteData(student){
 		method: 'POST',
 		url: 'http://s-apis.learningfuze.com/sgt/delete',
 		success: function(response){
-			if(response['success'] === true)
-			console.log(response);
-			student.displayRow.remove();
-		},
-		error: function(response){
-			if(response['success'] === false){
-				console.log(response);
-				$('.error').text(response);
+			if(response.success){
+				student.displayRow.remove();
+				$('.modalHeader').text('Success');
+				$('.modalText').text('Student was deleted from the database');
+				$('.modal').fadeIn();
+			} else {
+				$('.modalHeader').text('Operation Failed');
+				$('.modalText').text(response.errors);
 				$('.modal').fadeIn();
 			}
-		}
+		},
+		error: function(response){
+			if (!response.success){
+				$('.modalHeader').text('Error!');
+				$('.modalText').text(response.statusText);
+				$('.modal').fadeIn();
+			}
+		},
+		timeout: 5000
 	}
 	$.ajax(ajaxConfig)
 }
