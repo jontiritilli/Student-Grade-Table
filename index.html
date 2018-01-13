@@ -8,6 +8,33 @@
     <script src="script.js"></script>
     <script src="form-validation.js"></script>
     <meta name="viewport" content="initial-scale=1, user-scalable=no">
+<style>
+        .modal {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background-color: rgba(0,0,0,.4);
+        }
+        .modal-content {
+            width: 50%;
+            border-radius: 2vmin;
+            transform: translate(50%,50%);
+        }
+        .modalHeader {
+            background-color: #6FF0F0FF;
+            text-align: center;
+            border-radius: 2vmin;
+            top: 2vmin;
+            font-size: 5vmin;
+        }
+        .modalText {
+            text-align: center;
+            font-size: 3vmin;
+        }
+        .modalBtn {
+            text-align: center;
+        }
+    </style> 
 </head>
 <body>
 <div class="container">
@@ -21,7 +48,6 @@
             <small class="pull-right">Grade Average :<span class="avgGrade label label-default pull-right">0</span></small>
         </h3>
     </div>
-    
     <div class="container">
         <div class="row">
             <div class="student-add-form col-lg-3 col-md-3 col-sm-12 col-xs-12 pull-right">
@@ -76,6 +102,13 @@
                 </table>
             </div>
         </div>
+    </div>
+</div>
+<div class="modal">
+    <div class="modal-content row">
+        <div class="modalHeader modal-header align-middle"></div>
+        <div class="modalText align-middle modal-body"></div>
+        <div class="modalBtn"><button class="btn btn-danger" onclick="$('.modal').fadeOut()">Close</button></div>
     </div>
 </div>
 </body>
