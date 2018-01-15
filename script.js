@@ -73,14 +73,9 @@ function handleCancelClick(){
  * @return undefined
  * @calls clearAddStudentFormInputs, updateStudentList
  */
-function validateStudentInfo () {
-	let newStudent = {
-		name: $('#studentName').val(),
-		course: $('#course').val(),
-		grade: $('#studentGrade').val()
-	}
+function validate () {
 	let endFunction = false;
-	if(newStudent.name.length < 1){
+	if($('#studentName').val().length < 1){
 		$('#studentName').parent().removeClass('has-success');
 		$('#studentName').parent().addClass('has-error');
 		endFunction = true;
@@ -88,7 +83,7 @@ function validateStudentInfo () {
 		$('#studentName').parent().removeClass('has-error');
 		$('#studentName').parent().addClass('has-success');
 	};
-	if(newStudent.course.length < 1){
+	if($('#course').val().length < 1){
 		$('#course').parent().removeClass('has-success');
 		$('#course').parent().addClass('has-error');
 		endFunction = true;
@@ -96,7 +91,7 @@ function validateStudentInfo () {
 		$('#course').parent().removeClass('has-error');
 		$('#course').parent().addClass('has-success');
 	};
-	if(isNaN(parseInt(newStudent.grade)) || newStudent.grade.length === 0 || parseInt(newStudent.grade) < 0 || parseInt(newStudent.grade) > 100){
+	if(isNaN(parseInt($('#studentGrade').val())) || $('#studentGrade').val().length === 0 || parseInt($('#studentGrade').val()) < 0 || parseInt($('#studentGrade').val()) > 100){
 		$('#studentGrade').parent().removeClass('has-success');
 		$('#studentGrade').parent().addClass('has-error');
 		endFunction = true;
@@ -104,27 +99,24 @@ function validateStudentInfo () {
 		$('#studentGrade').parent().removeClass('has-error');
 		$('#studentGrade').parent().addClass('has-success');
 	};
-	if(!endFunction){
-		$('.addButton').attr('onclick','addStudent()')
-	} else {
-		$('.addButton').attr('onclick','failedInput()')
-	}
+	return endFunction
 } //function validateStudentinfo
 
-function failedInput () {
-	$('.modalHeader').text('Operation Failed');
-	$('.modalText').text('information was missing');
-	$('.modal').fadeIn();
-} //function failedInput
-
 function addStudent(){
-	const student = {
+	let newStudent = {
 		name: $('#studentName').val(),
 		course: $('#course').val(),
 		grade: $('#studentGrade').val()
 	}
-	addData(student);
-	clearAddStudentFormInputs();
+	let validated = validate(newStudent);
+	if(!validated){
+		addData(newStudent);
+		clearAddStudentFormInputs();
+	} else {
+		$('.modalHeader').text('Operation Failed');
+		$('.modalText').text('information was missing');
+		$('.modal').fadeIn();
+	}
 }
 /***************************************************************************************************
  * removeStudent - removes a student object and recalculates the grade avearge based upon the revised student_array
@@ -133,14 +125,13 @@ function addStudent(){
  */
 function removeStudent(student){
 	deleteData(student);
-	// student_array.splice(studentIndex,1);
 }
 /***************************************************************************************************
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
 
 function clearAddStudentFormInputs(){
-var inputIds = [
+let inputIds = [
 	$('#studentName').val(''),
 	$('#course').val(''),
 	$('#studentGrade').val('')
@@ -218,7 +209,7 @@ function renderGradeAverage(average){
 }
 
 function getData(){
-	var ajaxConfig = {
+	let ajaxConfig = {
 		dataType: 'json',
 		data: {
 			api_key: '4q6Xvdec30',
@@ -247,7 +238,7 @@ function getData(){
 }
 
 function addData(student){
-	var ajaxConfig = {
+	let ajaxConfig = {
 		dataType: 'json',
 		data: {
 			api_key: '4q6Xvdec30',
@@ -283,7 +274,7 @@ function addData(student){
 }
 
 function deleteData(student){
-	var ajaxConfig = {
+	let ajaxConfig = {
 		dataType: 'json',
 		data: {
 			api_key: '4q6Xvdec30',

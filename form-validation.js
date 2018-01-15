@@ -1,13 +1,20 @@
-
-function entryValidation (name,course,grade){
-	$(".student-add-form").validate({
-		rules: {
-			studentname: "required",
-			course: "required",
-			studentgrade: {
-				required: true,
-				number: true
-			}
-		}
-	});
-}
+// $(document).ready(function(){
+// 	$('.student-add-form').formValidation({
+//         framework: 'bootstrap',
+//         icon: {
+//             valid: 'glyphicon glyphicon-ok',
+//             invalid: 'glyphicon glyphicon-remove',
+//             validating: 'glyphicon glyphicon-refresh'
+//         },
+//         fields: {
+//             studentname: {
+//                 validators: {
+//                     regexp: {
+//                         regexp: /^[a-z\s]+$/i,
+//                         message: 'The full name can consist of alphabetical characters and spaces only'
+//                     }
+//                 }
+//             }
+//         }
+//     });
+// })
