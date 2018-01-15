@@ -190,14 +190,9 @@ function updateStudentList(array){
  * @returns {number}
  */
 function calculateGradeAverage(array){
-	let gradeList = array.map(function(obj) {
-	  return parseInt(obj.grade);
-	});
-	let getSum = function(total,num){
-		return total+num;
-	}
-	let number = gradeList.reduce(getSum)/gradeList.length;
-	renderGradeAverage(number);
+	let gradeList = array.map( obj => obj.grade);
+	let average = gradeList.reduce((total,num) => total+num, 0)/gradeList.length;
+	renderGradeAverage(average);
 }
 /***************************************************************************************************
  * renderGradeAverage - updates the on-page grade average
@@ -255,6 +250,7 @@ function addData(student){
 				$('.modalHeader').text('Success');
 				$('.modalText').text('Student was added to the database');
 				$('.modal').fadeIn();
+				setTimeout( () => {$('.modal').fadeOut()}, 1000);
 			} else {
 				$('.modalHeader').text('Operation Failed');
 				$('.modalText').text(response.errors);
@@ -288,6 +284,7 @@ function deleteData(student){
 				$('.modalHeader').text('Success');
 				$('.modalText').text('Student was deleted from the database');
 				$('.modal').fadeIn();
+				setTimeout( () => {$('.modal').fadeOut()}, 1000);
 			} else {
 				$('.modalHeader').text('Operation Failed');
 				$('.modalText').text(response.errors);
