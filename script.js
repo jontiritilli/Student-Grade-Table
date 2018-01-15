@@ -73,38 +73,56 @@ function handleCancelClick(){
  * @return undefined
  * @calls clearAddStudentFormInputs, updateStudentList
  */
-function validateStudentinfo () {
-	var newStudent = {
+function validateStudentInfo () {
+	let newStudent = {
 		name: $('#studentName').val(),
 		course: $('#course').val(),
 		grade: $('#studentGrade').val()
 	}
-	var endFunction = false;
-	if(newStudent.name.length < 2){
-		$('#studentName').val('Name Required');
+	let endFunction = false;
+	if(newStudent.name.length < 1){
+		$('#studentName').parent().removeClass('has-success');
 		$('#studentName').parent().addClass('has-error');
 		endFunction = true;
+	} else {
+		$('#studentName').parent().removeClass('has-error');
+		$('#studentName').parent().addClass('has-success');
 	};
-	if(newStudent.course.length < 2){
-		$('#course').val('Course Required');
+	if(newStudent.course.length < 1){
+		$('#course').parent().removeClass('has-success');
 		$('#course').parent().addClass('has-error');
 		endFunction = true;
+	} else {
+		$('#course').parent().removeClass('has-error');
+		$('#course').parent().addClass('has-success');
 	};
 	if(isNaN(parseInt(newStudent.grade)) || newStudent.grade.length === 0 || parseInt(newStudent.grade) < 0 || parseInt(newStudent.grade) > 100){
-		$('#studentGrade').val("Enter a grade '0' - '100'");
+		$('#studentGrade').parent().removeClass('has-success');
 		$('#studentGrade').parent().addClass('has-error');
 		endFunction = true;
+	} else {
+		$('#studentGrade').parent().removeClass('has-error');
+		$('#studentGrade').parent().addClass('has-success');
 	};
-	if(endFunction){
-		return;
+	if(!endFunction){
+		$('.addButton').attr('onclick','addStudent()')
+	} else {
+		$('.addButton').attr('onclick','failedInput()')
 	}
-	$('#studentName').parent().addClass('has-success');
-	$('#studentGrade').parent().addClass('has-error');
-	$('#course').parent().addClass('has-error');
-	addStudent(newStudent);
 } //function validateStudentinfo
 
-function addStudent(student){
+function failedInput () {
+	$('.modalHeader').text('Operation Failed');
+	$('.modalText').text('information was missing');
+	$('.modal').fadeIn();
+} //function failedInput
+
+function addStudent(){
+	const student = {
+		name: $('#studentName').val(),
+		course: $('#course').val(),
+		grade: $('#studentGrade').val()
+	}
 	addData(student);
 	clearAddStudentFormInputs();
 }
@@ -134,7 +152,7 @@ var inputIds = [
  * @param {object} studentObj a single student object with course, name, and grade inside
  */
 function renderStudentOnDom(student){
-	var deleteBtn = $('<button>',{
+	let deleteBtn = $('<button>',{
 		text: 'Delete',
 		class:'btn btn-danger',
 		on: {
@@ -143,10 +161,10 @@ function renderStudentOnDom(student){
 			}
 		}
 	});
-	var newRow = $('<tr>').addClass(student);
-	var newNameTH = $('<th>');
-	var newCourseTH = $('<th>');
-	var newGradeTH = $('<th>');
+	let newRow = $('<tr>').addClass(student);
+	let newNameTH = $('<th>');
+	let newCourseTH = $('<th>');
+	let newGradeTH = $('<th>');
 	newNameTH.text(student.name);
 	newCourseTH.text(student.course);
 	newGradeTH.text(student.grade);
@@ -164,11 +182,10 @@ function renderStudentOnDom(student){
  * @returns {undefined} none
  * @calls renderStudentOnDom, calculateGradeAverage, renderGradeAverage
  */
- var counter = 0;
 
 function updateStudentList(array){
 	$('#tBody').empty();
-	for(var studentIndex = 0; studentIndex< array.length; studentIndex ++){
+	for(let studentIndex = 0; studentIndex< array.length; studentIndex ++){
 		(function () {
 			renderStudentOnDom(array[studentIndex]);
 		})();
@@ -182,13 +199,13 @@ function updateStudentList(array){
  * @returns {number}
  */
 function calculateGradeAverage(array){
-	var gradeList = array.map(function(obj) {
+	let gradeList = array.map(function(obj) {
 	  return parseInt(obj.grade);
 	});
-	var getSum = function(total,num){
+	let getSum = function(total,num){
 		return total+num;
 	}
-	var number = gradeList.reduce(getSum)/gradeList.length;
+	let number = gradeList.reduce(getSum)/gradeList.length;
 	renderGradeAverage(number);
 }
 /***************************************************************************************************
