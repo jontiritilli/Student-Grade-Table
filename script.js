@@ -73,7 +73,7 @@ function handleCancelClick(){
  * @return undefined
  * @calls clearAddStudentFormInputs, updateStudentList
  */
-function addStudent(){
+function validateStudentinfo () {
 	var newStudent = {
 		name: $('#studentName').val(),
 		course: $('#course').val(),
@@ -82,28 +82,30 @@ function addStudent(){
 	var endFunction = false;
 	if(newStudent.name.length < 2){
 		$('#studentName').val('Name Required');
+		$('#studentName').parent().addClass('has-error');
 		endFunction = true;
 	};
 	if(newStudent.course.length < 2){
 		$('#course').val('Course Required');
+		$('#course').parent().addClass('has-error');
 		endFunction = true;
 	};
-	if(isNaN(parseInt(newStudent.grade))){
-		$('#studentGrade').val('Use Only Numbers');
-		endFunction = true;
-	};
-	if(newStudent.grade.length === 0){
-		$('#studentGrade').val('Grade Required');
-		endFunction = true;
-	};
-	if(parseInt(newStudent.grade) < 0 || parseInt(newStudent.grade) > 100){
-		$('#studentGrade').val('Grade must be 0 - 100');
+	if(isNaN(parseInt(newStudent.grade)) || newStudent.grade.length === 0 || parseInt(newStudent.grade) < 0 || parseInt(newStudent.grade) > 100){
+		$('#studentGrade').val("Enter a grade '0' - '100'");
+		$('#studentGrade').parent().addClass('has-error');
 		endFunction = true;
 	};
 	if(endFunction){
 		return;
 	}
-	addData(newStudent);
+	$('#studentName').parent().addClass('has-success');
+	$('#studentGrade').parent().addClass('has-error');
+	$('#course').parent().addClass('has-error');
+	addStudent(newStudent);
+} //function validateStudentinfo
+
+function addStudent(student){
+	addData(student);
 	clearAddStudentFormInputs();
 }
 /***************************************************************************************************
@@ -202,7 +204,7 @@ function getData(){
 	var ajaxConfig = {
 		dataType: 'json',
 		data: {
-			api_key: '4q6Xvdec30'
+			api_key: '4q6Xvdec30',
 		},
 		method: 'POST',
 		url: 'http://s-apis.learningfuze.com/sgt/get',
