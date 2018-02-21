@@ -145,7 +145,7 @@ let inputIds = [
 function renderStudentOnDom(student){
 	let deleteBtn = $('<button>',{
 		text: 'Delete',
-		class:'btn btn-danger',
+		class:'btn btn-outline-danger',
 		on: {
 			click: function(){
 				removeStudent(student);
