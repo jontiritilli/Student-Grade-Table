@@ -111,8 +111,8 @@
                     </div>
                     <div class="container">
                         <div class="row">
-                            <button type="button" class="addButton btn btn-outline-success" onclick="handleAddClicked()">Add</button>
-                            <button type="button" class="btn btn-outline-warning" onclick="handleCancelClick()" >Cancel</button>
+                            <button type="button" id='addBtn' class="addButton btn btn-outline-success">Add</button>
+                            <button type="button" id='cancelBtn' class="btn btn-outline-warning">Cancel</button>
                         </div>
                         <!-- <div class="row">
                             <button type="button" class="btn btn-info" onclick="getData()" >Get Data From Server</button>
@@ -120,8 +120,8 @@
                     </div>
                 </div>
 
-                <div class="student-list-container col-md-9 col-xs-12">
-                    <table class="student-list table">
+                <div class="student-list-container col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
+                    <table>
                         <thead>
                             <tr>
                                 <th>Student Name</th>
