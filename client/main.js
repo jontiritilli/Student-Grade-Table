@@ -33,7 +33,8 @@ $(document).ready(initializeApp);
 * initializes the application, including adding click handlers and pulling in any data from the server, in later versions
 */
 function initializeApp(){
-	getData()
+	addClickHandlers();
+	getData();
 }
 
 /***************************************************************************************************
@@ -42,12 +43,15 @@ function initializeApp(){
 * @returns  {undefined}
 *     
 */
-// function addClickHandlersToElements(){
-	// $('#table-body').on('click','button',function(){
-	// 	var studentRow = $(this).closest('tr');
-	// 	removeStudent(studentRow);
-	// });
-// }
+function addClickHandlers(){
+	$('#addBtn').on('click', () => {
+		handleAddClicked();
+	});
+
+	$('#cancelBtn').on('click', () => {
+		handleCancelClick();
+	});
+}
 
 /***************************************************************************************************
  * handleAddClicked - Event Handler when user clicks the add button
@@ -152,17 +156,28 @@ function renderStudentOnDom(student){
 			}
 		}
 	});
-	let newRow = $('<tr>').addClass(student);
-	let newNameTH = $('<th>');
-	let newCourseTH = $('<th>');
-	let newGradeTH = $('<th>');
+	let newRow = $('<tr>', {
+		class: 'student col-12'
+	});
+	let newNameTH = $('<th>'
+	//, {class: 'col-3 col-s3 col-m-3 col-lg-3 col-xl-3'}
+	);
+	let newCourseTH = $('<th>'
+	//, {class: 'col-3 col-s3 col-m-3 col-lg-3 col-xl-3'}
+	);
+	let newGradeTH = $('<th>'
+	//, {class: 'col-3 col-s3 col-m-3 col-lg-3 col-xl-3'}
+	);
+	let deleteBtnTH = $('<th>'
+	//, {class: 'col-3 col-s3 col-m-3 col-lg-3 col-xl-3'}
+	);
 	newNameTH.text(student.name);
 	newCourseTH.text(student.course);
 	newGradeTH.text(student.grade);
 	newRow.append(newNameTH);
 	newRow.append(newCourseTH);
 	newRow.append(newGradeTH);
-	newRow.append(deleteBtn);
+	newRow.append(deleteBtnTH.append(deleteBtn));
 	student.displayRow = newRow;
 	$('tbody').append(newRow);
 }
