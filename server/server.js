@@ -36,10 +36,6 @@ app.get('/login', (req, res) => {
     res.sendFile(resolve(__dirname, '..', 'client', 'login.html'))
 })
 
-app.get('/courses', (req, res) => {
-    res.sendFile(resolve(__dirname, '..', 'client', 'home.html'))
-})
-
 app.listen(PORT, ()=> {
     console.log('the system is running on port:', PORT);
 })

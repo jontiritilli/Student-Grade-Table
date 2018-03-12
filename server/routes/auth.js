@@ -8,13 +8,8 @@ const requireSignin = passport.authenticate('local', {session: false});
 module.exports = app => {
     app.post('/signin', requireSignin, Authentication.signin)
     app.post('/signup', Authentication.signup);
-    app.post('/get-user', requireAuth, (req, res)=>{
-        const user = {
-            name: req.user.givenName + ' ' + req.user.familyName,
-        }
-        res.send(user);
-    })
-    app.post('/another-route', requireAuth, (req, res) => {
-        res.send('testing this secret message');
+
+    app.get('/courses', (req, res) => {
+        res.sendFile(resolve(__dirname, '..', 'client', 'home.html'))
     })
 }

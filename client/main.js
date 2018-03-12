@@ -10,7 +10,8 @@ $(document).ready(initializeApp);
 */
 function initializeApp(){
 	addClickHandlers();
-	validate();
+	validateSignIn();
+	validateSignUp();
 }
 
 /***************************************************************************************************
@@ -33,15 +34,31 @@ function addClickHandlers(){
 	});
 }
 
-function loginUser(){
-
+function loginUser() {
+	console.log($('.signin-form').serialize())
+	event.preventDefault();
+	$.ajax({
+		url: '/signin',
+		data: $('.signin-form').serialize(),
+		method: 'post',
+		success: res => {
+			localStorage.setItem('token', res.token)
+		},
+		error: err => {
+			console.log(err)
+			// $('.modalHeader').text(err.statusMessage)
+			// $('.modalText').text('There was an issue logging in')
+			// $('.modal').show()
+		}
+	})
 }
 
 function addTeacher(){
 	event.preventDefault();
+	console.log($('.signup-form').serialize());
 	$.ajax({
 		url: '/signup',
-		data: $('.teacher-add-form').serialize(),
+		data: $('.signup-form').serialize(),
 		method: 'post',
 		success: res => {
 			console.log(res)
@@ -50,28 +67,6 @@ function addTeacher(){
 			console.log(err)
 		}
 	})
-}
-/***************************************************************************************************
- * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
- * @param {undefined} none
- * @return undefined
- * @calls clearAddStudentFormInputs, updateStudentList
- */
-function addStudent(){
-	let newStudent = {
-		name: $('#studentName').val(),
-		course: $('#course').val(),
-		grade: $('#studentGrade').val()
-	}
-	let validated = validate(newStudent);
-	if(!validated){
-		addData(newStudent);
-		clearAddStudentFormInputs();
-	} else {
-		$('.modalHeader').text('Operation Failed');
-		$('.modalText').text('information was missing');
-		$('.modal').fadeIn();
-	}
 }
 /***************************************************************************************************
  * removeStudent - removes a student object and recalculates the grade avearge based upon the revised student_array
@@ -164,16 +159,16 @@ function renderGradeAverage(average){
 /***************************************************************************************************
  * validation - validates inputs
  */
-function validate() {
-	$(".teacher-add-form").validate({
+function validateSignUp() {
+	$(".signup-form").validate({
 		rules: {
 			firstName: {
 				required: true,
-				minlength: 5
+				minlength: 2
 			},
 			lastName: {
 				required: true,
-				minlength: 5
+				minlength: 2
 			},
 			email: {
 				required: true,
@@ -208,6 +203,41 @@ function validate() {
 			confirmPassword: {
 				required: 'Please confirm your password',
 				equalTo: 'Must match password entered above'
+			}
+		},
+		errorElement: 'div',
+		errorPlacement: function (error, element) {
+			var placement = $(element).data('error');
+			if (placement) {
+				$(placement).append(error)
+			} else {
+				error.insertAfter(element);
+			}
+		}
+	});
+}
+
+function validateSignIn() {
+	$(".signin-form").validate({
+		rules: {
+			email: {
+				required: true,
+				email: true
+			},
+			password: {
+				required: true,
+				minlength: 8
+			}
+		},
+		//For custom messages
+		messages: {
+			email: {
+				required: 'Please provide an email',
+				email: 'Valid email required'
+			},
+			password: {
+				required: 'Please choose a password',
+				minlength: 'Password must be at least 8 characters'
 			}
 		},
 		errorElement: 'div',
