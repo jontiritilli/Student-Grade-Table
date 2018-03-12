@@ -2,5 +2,5 @@
 .idea
 README.md
 node_modules
-config/index.js
+server/config/index.js
 .vscode
