@@ -19,18 +19,25 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: false
 }));
+
 app.use(express.static(resolve(__dirname, '..', 'client')))
+
 authRoutes(app);
 
-app.post('/testpost', (req,res)=>{
-    const dataToSend = {
-        message: 'received data, sending data back',
-        received: req.body
-    };
-    res.send( dataToSend );
+app.get('/home', (req, res)=>{
+    res.sendFile(resolve(__dirname, '..', 'client', 'home.html'))
 })
-app.get('*', (req, res) => {
-    res.sendFile(resolve(__dirname, '..', 'client', 'index.html'))
+
+app.get('/signup', (req, res) => {
+    res.sendFile(resolve(__dirname, '..', 'client', 'signup.html'))
+})
+
+app.get('/login', (req, res) => {
+    res.sendFile(resolve(__dirname, '..', 'client', 'login.html'))
+})
+
+app.get('/courses', (req, res) => {
+    res.sendFile(resolve(__dirname, '..', 'client', 'home.html'))
 })
 
 app.listen(PORT, ()=> {

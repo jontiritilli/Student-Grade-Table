@@ -9,8 +9,8 @@ const userSchema = new Schema({
         lowercase: true
     },
     password: String,
-    givenName: String,
-    familyName: String
+    firstName: String,
+    lastName: String
 })
 
 //callback function definition using the pre method

@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const studentSchema = new Schema({
-    givenName: String,
-    familyName: String,
-    courses: Object
+const courseSchema = new Schema({
+    courseName: String,
+    teacher: String,
+    semester: String,
+    students: Object
 })
 
 //create model for 'student' collection

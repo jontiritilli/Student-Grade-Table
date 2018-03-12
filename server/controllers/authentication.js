@@ -13,20 +13,20 @@ function token (user) {
 }
 
 exports.signup = (req, res, next) => {
-    const { email, password, givenName, familyName } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
-    if(!email || !password || !givenName || !familyName){
+    if(!firstName || !lastName || !email || !password){
         const errors = [];
-        if (!email) {
+        if (!firstName) {
             errors.push('no email provided')
         }
-        if (!password) {
+        if (!lastName) {
             errors.push('no password provided')
         }
-        if (!givenName) {
+        if (!email) {
             errors.push('no first name provided')
         }
-        if (!familyName) {
+        if (!password) {
             errors.push('no last name provided')
         }
 
@@ -39,7 +39,7 @@ exports.signup = (req, res, next) => {
             return res.status(422).send(['Email is in use'])
         }
 
-        const newUser = new User({email, password, givenName, familyName})
+        const newUser = new User({ firstName, lastName, email, password })
 
         newUser.save((err)=>{
             if(err) return next(err);

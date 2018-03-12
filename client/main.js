@@ -1,31 +1,7 @@
-/* information about jsdocs: 
-* param: http://usejsdoc.org/tags-param.html#examples
-* returns: http://usejsdoc.org/tags-returns.html
-* 
 /**
  * Listen for the document to load and initialize the application
  */
 $(document).ready(initializeApp);
-
-/**
- * Define all global variables here.  
- */
-
-/***********************
- * student_array - global array to hold student objects
- * @type {Array}
- * example of student_array after input: 
- * student_array = [
- *  { name: 'Jake', course: 'Math', grade: 85 },
- *  { name: 'Jill', course: 'Comp Sci', grade: 85 }
- * ];
- */
-// student_array = [];
-/***********************
- * counter - global variable to keep track of entries created
- * @type {number}
- */
-// counter = 0;
 /***************************************************************************************************
 * initializeApp 
 * @params {undefined} none
@@ -34,7 +10,7 @@ $(document).ready(initializeApp);
 */
 function initializeApp(){
 	addClickHandlers();
-	getData();
+	validate();
 }
 
 /***************************************************************************************************
@@ -44,32 +20,36 @@ function initializeApp(){
 *     
 */
 function addClickHandlers(){
-	$('#addBtn').on('click', () => {
-		handleAddClicked();
+	$('#signUpBtn').on('click', () => {
+		addTeacher();
 	});
 
-	$('#cancelBtn').on('click', () => {
-		handleCancelClick();
+	$('#loginBtn').on('click', () => {
+		loginUser();
+	});
+
+	$('#resetBtn').on('click', () => {
+		clearForm(event)
 	});
 }
 
-/***************************************************************************************************
- * handleAddClicked - Event Handler when user clicks the add button
- * @param {object} event  The event object from the click
- * @return: 
-       none
- */
-function handleAddClicked(){
-	addStudent();
+function loginUser(){
+
 }
-/***************************************************************************************************
- * handleCancelClicked - Event Handler when user clicks the cancel button, should clear out student form
- * @param: {undefined} none
- * @returns: {undefined} none
- * @calls: clearAddStudentFormInputs
- */
-function handleCancelClick(){
-	clearAddStudentFormInputs();
+
+function addTeacher(){
+	event.preventDefault();
+	$.ajax({
+		url: '/signup',
+		data: $('.teacher-add-form').serialize(),
+		method: 'post',
+		success: res => {
+			console.log(res)
+		},
+		error: err => {
+			console.log(err)
+		}
+	})
 }
 /***************************************************************************************************
  * addStudent - creates a student objects based on input fields in the form and adds the object to global student array
@@ -77,35 +57,6 @@ function handleCancelClick(){
  * @return undefined
  * @calls clearAddStudentFormInputs, updateStudentList
  */
-function validate () {
-	let endFunction = false;
-	if($('#studentName').val().length < 1){
-		$('#studentName').parent().removeClass('has-success');
-		$('#studentName').parent().addClass('has-error');
-		endFunction = true;
-	} else {
-		$('#studentName').parent().removeClass('has-error');
-		$('#studentName').parent().addClass('has-success');
-	};
-	if($('#course').val().length < 1){
-		$('#course').parent().removeClass('has-success');
-		$('#course').parent().addClass('has-error');
-		endFunction = true;
-	} else {
-		$('#course').parent().removeClass('has-error');
-		$('#course').parent().addClass('has-success');
-	};
-	if(isNaN(parseInt($('#studentGrade').val())) || $('#studentGrade').val().length === 0 || parseInt($('#studentGrade').val()) < 0 || parseInt($('#studentGrade').val()) > 100){
-		$('#studentGrade').parent().removeClass('has-success');
-		$('#studentGrade').parent().addClass('has-error');
-		endFunction = true;
-	} else {
-		$('#studentGrade').parent().removeClass('has-error');
-		$('#studentGrade').parent().addClass('has-success');
-	};
-	return endFunction
-} //function validateStudentinfo
-
 function addStudent(){
 	let newStudent = {
 		name: $('#studentName').val(),
@@ -147,37 +98,29 @@ let inputIds = [
  * @param {object} studentObj a single student object with course, name, and grade inside
  */
 function renderStudentOnDom(student){
-	let deleteBtn = $('<button>',{
-		text: 'Delete',
-		class:'btn btn-outline-danger',
+	let viewBtn = $('<button>',{
+		text: 'Courses',
+		class:'btn btn-outline-success',
 		on: {
 			click: function(){
-				removeStudent(student);
+				viewCourses(student);
 			}
 		}
 	});
 	let newRow = $('<tr>', {
 		class: 'student col-12'
 	});
-	let newNameTH = $('<th>'
-	//, {class: 'col-3 col-s3 col-m-3 col-lg-3 col-xl-3'}
-	);
-	let newCourseTH = $('<th>'
-	//, {class: 'col-3 col-s3 col-m-3 col-lg-3 col-xl-3'}
-	);
-	let newGradeTH = $('<th>'
-	//, {class: 'col-3 col-s3 col-m-3 col-lg-3 col-xl-3'}
-	);
-	let deleteBtnTH = $('<th>'
-	//, {class: 'col-3 col-s3 col-m-3 col-lg-3 col-xl-3'}
-	);
+	let newNameTH = $('<th>');
+	let newCourseTH = $('<th>');
+	let newGradeTH = $('<th>');
+	let viewBtnTH = $('<th>');
 	newNameTH.text(student.name);
 	newCourseTH.text(student.course);
 	newGradeTH.text(student.grade);
 	newRow.append(newNameTH);
 	newRow.append(newCourseTH);
 	newRow.append(newGradeTH);
-	newRow.append(deleteBtnTH.append(deleteBtn));
+	newRow.append(viewBtnTH.append(viewBtn));
 	student.displayRow = newRow;
 	$('tbody').append(newRow);
 }
@@ -218,102 +161,63 @@ function renderGradeAverage(average){
 	$('.avgGrade').text(average.toFixed(1));
 }
 
-function getData(){
-	let ajaxConfig = {
-		dataType: 'json',
-		data: {
-			api_key: '4q6Xvdec30',
+/***************************************************************************************************
+ * validation - validates inputs
+ */
+function validate() {
+	$(".teacher-add-form").validate({
+		rules: {
+			firstName: {
+				required: true,
+				minlength: 5
+			},
+			lastName: {
+				required: true,
+				minlength: 5
+			},
+			email: {
+				required: true,
+				email: true
+			},
+			password: {
+				required: true,
+				minlength: 8
+			},
+			confirmPassword: {
+				required: true,
+				minlength: 8,
+				equalTo: '#password'
+			}
 		},
-		method: 'POST',
-		url: 'http://s-apis.learningfuze.com/sgt/get',
-		success: function(response){
-			if(response.success === true){
-				updateStudentList(response.data);
+		//For custom messages
+		messages: {
+			firstName: {
+				required: 'Please provide first name',
+			},
+			lastName: {
+				required: 'Please provide last name',
+			},
+			email: {
+				required: 'Please provide an email',
+				email: 'Valid email required'
+			},
+			password: {
+				required: 'Please choose a password',
+				minlength: 'Password must be at least 8 characters'
+			},
+			confirmPassword: {
+				required: 'Please confirm your password',
+				equalTo: 'Must match password entered above'
+			}
+		},
+		errorElement: 'div',
+		errorPlacement: function (error, element) {
+			var placement = $(element).data('error');
+			if (placement) {
+				$(placement).append(error)
 			} else {
-				$('.modalHeader').text('Operation Failed');
-				$('.modalText').text(response.errors);
-				$('.modal').fadeIn();
+				error.insertAfter(element);
 			}
-		},
-		error: function(response){
-			if (!response.success){
-				$('.modalHeader').text('Error!');
-				$('.modalText').text(response.statusText);
-				$('.modal').fadeIn();
-			}
-		},
-		timeout: 5000
-	}
-	$.ajax(ajaxConfig)
-}
-
-function addData(student){
-	let ajaxConfig = {
-		dataType: 'json',
-		data: {
-			api_key: '4q6Xvdec30',
-			name: student.name,
-			course: student.course,
-			grade: student.grade
-		},
-		method: 'POST',
-		url: 'http://s-apis.learningfuze.com/sgt/create',
-		success: function(response){
-			if (response.success){
-				student.id = response.new_id;
-				renderStudentOnDom(student);
-				$('.modalHeader').text('Success');
-				$('.modalText').text('Student was added to the database');
-				$('.modal').fadeIn();
-				setTimeout( () => {$('.modal').fadeOut()}, 1000);
-			} else {
-				$('.modalHeader').text('Operation Failed');
-				$('.modalText').text(response.errors);
-				$('.modal').fadeIn();
-			}
-		},
-		error: function(response){
-			if (!response.success){
-				$('.modalHeader').text('Error!');
-				$('.modalText').text(response.statusText);
-				$('.modal').fadeIn();
-			}
-		},
-		timeout: 5000
-	}
-	$.ajax(ajaxConfig)
-}
-
-function deleteData(student){
-	let ajaxConfig = {
-		dataType: 'json',
-		data: {
-			api_key: '4q6Xvdec30',
-			student_id: student.id
-		},
-		method: 'POST',
-		url: 'http://s-apis.learningfuze.com/sgt/delete',
-		success: function(response){
-			if(response.success){
-				student.displayRow.remove();
-				$('.modalHeader').text('Success');
-				$('.modalText').text('Student was deleted from the database');
-				$('.modal').fadeIn();
-				setTimeout( () => {$('.modal').fadeOut()}, 1000);
-			} else {
-				$('.modalHeader').text('Operation Failed');
-				$('.modalText').text(response.errors);
-				$('.modal').fadeIn();
-			}
-		},
-		error: function(response){
-			if (!response.success){
-				$('.modalHeader').text('Error!');
-				$('.modalText').text(response.statusText);
-				$('.modal').fadeIn();
-			}
-		},
-		timeout: 5000
-	}
-	$.ajax(ajaxConfig)
+		}
+	});
 }
