@@ -1,9 +1,9 @@
 const express = require('express');
 const PORT = process.env.PORT || 9000;
 const mongoose = require('mongoose');
-const {resolve} = require('path');
+const { resolve } = require('path');
 const cors = require('cors');
-const {db_connect} = require('./config');
+const { db_connect } = require('./config');
 const authRoutes = require('./routes/auth');
 
 const app = express();
@@ -24,7 +24,7 @@ app.use(express.static(resolve(__dirname, '..', 'client')))
 
 authRoutes(app);
 
-app.get('/home', (req, res)=>{
+app.get('/', (req, res)=>{
     res.sendFile(resolve(__dirname, '..', 'client', 'home.html'))
 })
 
