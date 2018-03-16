@@ -1,43 +1,23 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const bcrypt = require('bcrypt-nodejs');
 
-const userSchema = new Schema({
+const UserSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
-        unique: true,
-        lowercase: true
+        required: true
     },
-    password: String,
-    firstName: String,
-    lastName: String
-})
+    password: {
+        type: String,
+        required: true
+    },
+    classes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'classes'
+    }]
+});
 
-//callback function definition using the pre method
-userSchema.pre('save', function(next){
-    const user = this;
-
-    bcrypt.genSalt(10, (err, salt) => {
-        if(err) return next(err);
-        bcrypt.hash(user.password, salt, null, (err, hash)=>{
-            if(err) return next(err);
-
-            user.password = hash;
-
-            next();
-        })
-    })
-})
-
-userSchema.methods.comparePasswords = function(candidate, callback){
-    bcrypt.compare(candidate, this.password, (err, isMatch)=>{
-        if(err) return callback(err);
-
-        callback(null, isMatch)
-    })
-}
-
-//create model for 'user' collection
-const ModelClass = mongoose.model('user', userSchema)
-
-module.exports = ModelClass
+mongoose.model('users', UserSchema);

@@ -38,7 +38,7 @@ function loginUser() {
 	console.log($('.signin-form').serialize())
 	event.preventDefault();
 	$.ajax({
-		url: '/signin',
+		url: '/auth/signin',
 		data: $('.signin-form').serialize(),
 		method: 'post',
 		success: res => {
@@ -57,7 +57,7 @@ function addTeacher(){
 	event.preventDefault();
 	console.log($('.signup-form').serialize());
 	$.ajax({
-		url: '/signup',
+		url: '/auth/signup',
 		data: $('.signup-form').serialize(),
 		method: 'post',
 		success: res => {

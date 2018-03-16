@@ -8,13 +8,13 @@ const authRoutes = require('./routes/auth');
 
 const app = express();
 
-mongoose.connect(db_connect).then(()=> {
+mongoose.connect(db_connect).then(() => {
     console.log('database is connected');
-}).catch(err=> {
+}).catch(err => {
     console.log('error connecting to the database', err.message);
 })
 
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({
     extended: false
@@ -24,7 +24,7 @@ app.use(express.static(resolve(__dirname, '..', 'client')))
 
 authRoutes(app);
 
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
     res.sendFile(resolve(__dirname, '..', 'client', 'home.html'))
 })
 
@@ -32,7 +32,7 @@ app.get('/signup', (req, res) => {
     res.sendFile(resolve(__dirname, '..', 'client', 'signup.html'))
 })
 
-app.get('/login', (req, res) => {
+app.get('/signin', (req, res) => {
     res.sendFile(resolve(__dirname, '..', 'client', 'login.html'))
 })
 

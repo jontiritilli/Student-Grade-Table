@@ -50,11 +50,9 @@ exports.signup = (req, res, next) => {
 }
 
 exports.signin = (req, res, next) => {
-    console.log('the response', res);
-    console.log('the request', req);
-    if (!res.req.user) {
-        return res.send(401, { success: false, message: 'Incorrect email or password' });
+    if (req.isAuthenticated()) {
+        return res.send(401, { success: false, message: 'Incorrect email or password'});
     }
     
-    return res.send({token: token(req.user), success: true, message: 'authentication succeeded' });
+    return res.send({ token: token(req.user), success: true, message: 'authentication succeeded'});
 }
