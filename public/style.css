@@ -33,24 +33,14 @@
     text-align: center;
 }
 
-.input-group div.error {
+span.label {
     position: relative;
-    top: -1rem;
-    left: 0rem;
+    /* top: -1rem; */
+    left: 2.5rem;
     font-size: 0.8rem;
     color: #FF4081;
     -webkit-transform: translateY(0%);
     -ms-transform: translateY(0%);
     -o-transform: translateY(0%);
     transform: translateY(0%);
-}
-
-.input-group label.active {
-    width: 100%;
-}
-
-.left-alert input[type=text]+label:after,
-.left-alert input[type=email]+label:after,
-.left-alert textarea.materialize-textarea+label:after {
-    left: 0px;
 }

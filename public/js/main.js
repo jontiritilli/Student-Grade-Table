@@ -12,6 +12,9 @@ function initializeApp(){
 	addClickHandlers();
 	validateSignIn();
 	validateSignUp();
+	$.validator.methods.email = function (value, element) {
+		return this.optional(element) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$/.test(value);
+	}
 }
 
 /***************************************************************************************************
@@ -187,29 +190,31 @@ function validateSignUp() {
 		//For custom messages
 		messages: {
 			firstName: {
-				required: 'Please provide first name',
+				required: 'This Field is Required',
+				minlength: 'Enter at least 2 characters'
 			},
 			lastName: {
-				required: 'Please provide last name',
+				required: 'This Field is Required',
+				minlength: 'Enter at least 2 characters'
 			},
 			email: {
-				required: 'Please provide an email',
+				required: 'This Field is Required',
 				email: 'Valid email required'
 			},
 			password: {
-				required: 'Please choose a password',
+				required: 'This Field is Required',
 				minlength: 'Password must be at least 8 characters'
 			},
 			confirmPassword: {
-				required: 'Please confirm your password',
+				required: 'This Field is Required',
 				equalTo: 'Must match password entered above'
 			}
 		},
-		errorElement: 'div',
+		errorElement: 'span',
+		errorClass: 'label',
 		errorPlacement: function (error, element) {
-			var placement = $(element).data('error');
-			if (placement) {
-				$(placement).append(error)
+			if (element.parent('.input-group').length) {
+				error.insertAfter(element.parent());
 			} else {
 				error.insertAfter(element);
 			}

@@ -1,0 +1,22 @@
+doctype=html
+html(language=en)
+include includes/_head
+body
+    include includes/_navbar.pug
+    div.container
+        div.jumbotron
+            h1.display-3 Welcome to SGT
+            p.lead This is a tool created for teachers. It can be implemented to keep track of courses, semesters, students, and assignments. It is a class leading example of back-end functionality with user friendly front-end implementation.</p>
+            hr.my-4
+            p This is a free tool that can be used securely from wherever you work.</p>
+            p.lead
+                a.btn.btn-primary.btn-lg(href='/signup') Sign Up
+                a.btn.btn-secondary.btn-lg(href='/signin') Sign In
+    div.modal
+        div.modal-content.row
+            div.modalHeader.modal-header.align-middle
+            div.modalText.align-middle.modal-body
+            div.modalBtn: button.btn.btn-danger(onclick='$('.modal').fadeOut()') Close
+
+    include includes/_modal
+
