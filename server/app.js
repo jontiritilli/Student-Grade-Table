@@ -4,10 +4,12 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
-const authRoutes = require('./controllers/authentication'); 
 const pug = require('pug');
 
 const app = express();
+
+// // Passport Config
+// require('./config/passport')(passport);
 
 //DB Config
 const db = require('./config/db');
@@ -16,7 +18,7 @@ const db = require('./config/db');
 mongoose.Promise = global.Promise;
 
 mongoose.connect(db.mongoURI)
-    .then(() => {console.log('database is connected')})
+    .then(() => {console.log('mLab is connected')})
     .catch(err => {console.log('error connecting to the database', err.message)})
 
 //Bodyparser middleware
@@ -42,20 +44,33 @@ app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+// Load Routes
+const student = require('./routes/student');
+const user = require('./routes/user');
+
 //Home
 app.get('/', (req, res) => {
     res.render('index');
 });
 
-//Signup
-app.get('/signup', (req, res) => {
-    res.render('signup')
-})
+// Use Routes
+app.use('/student', student);
+app.use('/user', user);
 
-//Signin
-app.get('/signin', (req, res) => {
-    res.render('signin')
-})
+// //Signup
+// app.get('/signup', (req, res) => {
+//     res.render('signup')
+// })
+
+// //Signin
+// app.get('/signin', (req, res) => {
+//     res.render('signin')
+// })
+
+// //Students
+// app.get('/courses', (req, res) => {
+//     res.render('courses')
+// })
 
 const PORT = process.env.PORT || 9000;
 

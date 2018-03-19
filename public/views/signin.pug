@@ -4,22 +4,20 @@ include includes/_head
 body
     include includes/_navbar.pug
     div.container
-        div.container
-            div.row
-                form.signin-form.col-sm-12.col-lg-3.float-right
-                    h4 Sign In to Your Account
-                    div.form-group
-                        div.input-group
-                            span.input-group-addon
-                                span.fa.fa-envelope
-                            input(type='text' class='form-control' name='email' id='email' placeholder='Email')
-                    div.form-group
-                        div.input-group
-                            span.input-group-addon
-                                span.fa.fa-key
-                            input(type='password' class='form-control' name='password' id='password' placeholder='Password')
-                    div.container
-                        div.row
-                            button(type='button' id='loginBtn' class='btn btn-outline-success') Login
-                            button(type='button' id='clearBtn' class='btn btn-outline-danger') Clear
+        div.row
+            form.signin-form.col-sm-12.col-lg-3.float-right(method='post' action='/user/signin')
+                h3.d-flex.justify-content-center Sign In to Your Account
+                div.form-group
+                    div.input-group
+                        span.input-group-addon
+                            span.fa.fa-envelope
+                        input.form-control.form-control-sm(type='text' name='email' id='email' placeholder='Email')
+                div.form-group
+                    div.input-group
+                        span.input-group-addon
+                            span.fa.fa-key
+                        input.form-control.form-control-sm(type='password' name='password' id='password' placeholder='Password')
+                div.row.d-flex.justify-content-center
+                    button(type='button' id='loginBtn' class='btn btn-outline-success') Sign In
+                    button(type='button' id='clearBtn' class='btn btn-outline-danger') Clear
     include includes/_modal

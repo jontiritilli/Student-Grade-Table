@@ -1,51 +1,11 @@
+const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 const { ensureAuthenticated } = require('../helpers/ensureAuth');
 
 // Load Ideas Model
-require('../models/Student');
+require('../models/Students');
 const Students = mongoose.model('students');
-
-// Manage Students
-router.get('/:id/students', ensureAuthenticated, (req, res) => {
-    let classID = (req.params.id).toString();
-    Classes.find({
-        teacher: req.user,
-        class: Classes.classID
-    })
-        .then((students) => {
-            console.log(students);
-            res.redirect('/classes/' + req.params.id);
-        });
-});
-
-router.post('/:id', ensureAuthenticated, (req, res) => {
-    Classes.findById(req.params.id)
-        .then((classFound) => {
-            Students.findById(req.body.studentId)
-                .then((student) => {
-                    Classes.update(
-                        { _id: req.params.id },
-                        { $addToSet: { students: student } },
-                        function (err, results) {
-                            if (results.nModified > 0) {
-                                Students.update(
-                                    { _id: student },
-                                    { $addToSet: { classes: classFound } },
-                                    { upsert: true },
-                                    function (err, raw) {
-                                        req.flash('success_msg', `Added ${student.firstName} to ${classFound.title}`);
-                                        res.redirect('/classes');
-                                    });
-                            } else {
-                                req.flash('error_msg', 'Failed to add student');
-                                res.redirect('/classes');
-                            }
-                        }
-                    )
-                })
-        });
-});
 
 // Add Students
 router.get('/add/:id', ensureAuthenticated, (req, res) => {
@@ -87,7 +47,7 @@ router.get('/add/:id', ensureAuthenticated, (req, res) => {
         });
 });
 
-// Delete Classes
+// Delete Students
 router.delete('/:id', ensureAuthenticated, (req, res) => {
     Students.remove({ _id: req.params.id })
         .then(() => {

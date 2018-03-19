@@ -12,6 +12,7 @@ function initializeApp(){
 	addClickHandlers();
 	validateSignIn();
 	validateSignUp();
+	validateCourses();
 	$.validator.methods.email = function (value, element) {
 		return this.optional(element) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$/.test(value);
 	}
@@ -32,9 +33,13 @@ function addClickHandlers(){
 		loginUser();
 	});
 
-	$('#resetBtn').on('click', () => {
+	$('#clearBtn').on('click', () => {
 		clearForm(event)
 	});
+}
+
+function clearForm(event){
+	event.target.parentElement.parentElement.reset();
 }
 
 function loginUser() {
@@ -71,55 +76,45 @@ function addTeacher(){
 		}
 	})
 }
-/***************************************************************************************************
- * removeStudent - removes a student object and recalculates the grade avearge based upon the revised student_array
- * @param {undefined} none
- * @return undefined
- */
-function removeStudent(student){
-	deleteData(student);
-}
-/***************************************************************************************************
- * clearAddStudentForm - clears out the form values based on inputIds variable
- */
 
-function clearAddStudentFormInputs(){
-let inputIds = [
-	$('#studentName').val(''),
-	$('#course').val(''),
-	$('#studentGrade').val('')
-];
+
+function addStudent(){
+	event.preventDefault();
+	console.log($('.student-add-form').serialize());
+	$.ajax({
+		url: '/auth/signup',
+		data: $('.signup-form').serialize(),
+		method: 'post',
+		success: res => {
+			console.log(res)
+		},
+		error: err => {
+			console.log(err)
+		}
+	})
 }
-/***************************************************************************************************
- * renderStudentOnDom - take in a student object, create html elements from the values and then append the elements
- * into the .student_list tbody
- * @param {object} studentObj a single student object with course, name, and grade inside
- */
+
 function renderStudentOnDom(student){
-	let viewBtn = $('<button>',{
-		text: 'Courses',
-		class:'btn btn-outline-success',
+	let deleteBtn = $('<button>',{
+		text: 'Delete',
+		class:'btn btn-outline-danger',
 		on: {
 			click: function(){
-				viewCourses(student);
+				deleteData(student);
 			}
 		}
 	});
 	let newRow = $('<tr>', {
-		class: 'student col-12'
+		class: 'student col-xs-12'
 	});
 	let newNameTH = $('<th>');
 	let newCourseTH = $('<th>');
 	let newGradeTH = $('<th>');
 	let viewBtnTH = $('<th>');
-	newNameTH.text(student.name);
-	newCourseTH.text(student.course);
-	newGradeTH.text(student.grade);
-	newRow.append(newNameTH);
-	newRow.append(newCourseTH);
-	newRow.append(newGradeTH);
-	newRow.append(viewBtnTH.append(viewBtn));
-	student.displayRow = newRow;
+	newRow.append(newNameTH.text(student.name));
+	newRow.append(newCourseTH.text(student.course));
+	newRow.append(newGradeTH.text(student.grade));
+	newRow.append(viewBtnTH.append(deleteBtn));
 	$('tbody').append(newRow);
 }
 
@@ -245,14 +240,60 @@ function validateSignIn() {
 				minlength: 'Password must be at least 8 characters'
 			}
 		},
-		errorElement: 'div',
+		errorElement: 'span',
+		errorClass: 'label',
 		errorPlacement: function (error, element) {
-			var placement = $(element).data('error');
-			if (placement) {
-				$(placement).append(error)
+			if (element.parent('.input-group').length) {
+				error.insertAfter(element.parent());
 			} else {
 				error.insertAfter(element);
 			}
 		}
 	});
 }
+
+function validateCourses() {
+	$(".student-add-form").validate({
+		rules: {
+			studentName: {
+				required: true,
+				minlength: 2
+			},
+			course: {
+				required: true,
+				minlength: 2
+			},
+			studentGrade: {
+				required: true,
+				min: 0,
+				max: 100
+			}
+		},
+		//For custom messages
+		messages: {
+			studentName: {
+				required: 'This field is required',
+				minlength: 'Please enter at least 2 letters'
+			},
+			course: {
+				required: 'This field is required',
+				minlength: 'Please enter at least 2 letters'
+			},
+			studentGrade: {
+				required: 'This field is required',
+				min: 'Please enter a number 0 - 100',
+				max: 'Please enter a number 0 - 100'
+			}
+		},
+		errorElement: 'span',
+		errorClass: 'label',
+		errorPlacement: (error, element) => {
+			if (element.parent('.input-group').length) {
+				error.insertAfter(element.parent());
+			} else {
+				error.insertAfter(element);
+			}
+		}
+	});
+}
+

@@ -2,6 +2,18 @@
     cursor: pointer;
 }
 
+#clearBtn {
+    margin-left: 15px;
+}
+
+a.signin {
+    margin-left: 10px;
+}
+
+.dropdown-menu {
+    top: 34;
+}
+
 .modal {
     width: 100%;
     height: 100%;
