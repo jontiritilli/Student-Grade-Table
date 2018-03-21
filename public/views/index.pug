@@ -1,8 +1,8 @@
 doctype=html
 html(language=en)
-include includes/_head
+include components/_head
 body
-    include includes/_navbar.pug
+    include components/_navbar.pug
     div.container
         div.jumbotron
             if user != null
@@ -15,4 +15,4 @@ body
             p.lead
                 a.btn.btn-primary.btn-lg.signup(href='/user/signup') Sign Up
                 a.btn.btn-secondary.btn-lg.signin(href='/user/signin') Sign In
-    include includes/_modal
+    include components/_modal

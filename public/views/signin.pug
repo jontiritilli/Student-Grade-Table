@@ -1,23 +1,22 @@
 doctype=html
 html(language=en)
-include includes/_head
+include components/_head
 body
-    include includes/_navbar.pug
-    div.container
-        div.row
-            form.signin-form.col-sm-12.col-lg-3.float-right(method='post' action='/user/signin')
-                h3.d-flex.justify-content-center Sign In to Your Account
+    include components/_navbar.pug
+    div.card.access
+        div.card-body
+            form.signin-form.col-sm-12(method='post' action='/user/signin')
+                h3.card-title.d-flex.justify-content-center Sign In to Your Account
                 div.form-group
                     div.input-group
                         span.input-group-addon
-                            span.fa.fa-envelope
+                            i.input-group-text.fas.fa-envelope
                         input.form-control.form-control-sm(type='text' name='email' id='email' placeholder='Email')
                 div.form-group
                     div.input-group
                         span.input-group-addon
-                            span.fa.fa-key
+                            i.input-group-text.fas.fa-lock
                         input.form-control.form-control-sm(type='password' name='password' id='password' placeholder='Password')
                 div.row.d-flex.justify-content-center
-                    button(type='button' id='loginBtn' class='btn btn-outline-success') Sign In
-                    button(type='button' id='clearBtn' class='btn btn-outline-danger') Clear
-    include includes/_modal
+                    button(type='submit' id='loginBtn' class='btn btn-outline-success') Sign In
+    include components/_modal

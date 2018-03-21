@@ -18,40 +18,37 @@ router.get('/signup', (req, res) => {
     res.render('signup')
 })
 
-// signin form POST
+// SignIN Form POST
 router.post('/signin', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/courses',
-        failureRedirect: '/user/signin',
+        failureRedirect: '/signin',
         failureFlash: true
     })(req, res, next);
 });
 
-// signup Form POST
+// SignUP Form POST
 router.post('/signup', (req, res) => {
+    console.log(req.body)
     let errors = [];
 
     if (req.body.password !== req.body.confirmPassword) {
         errors.push({ text: "Passwords do not match" });
     }
 
-    if (req.body.password.length < 8) {
+    if (req.body.password.length < 5) {
         errors.push({ text: "Password must be at least four characters" })
     }
 
     if (errors.length > 0) {
-        res.render('user/signup', {
-            errors: errors,
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            confirmPassword: req.body.confirmPassword
-        })
+        //do something here to notify users of failure
+        res.send(errors)
     } else {
         User.findOne({ email: req.body.email })
         .then(user => {
             if (user) {
                 res.redirect('/user/signup');
+                //tell them that email already registered
             } else {
                 const newUser = new User({
                     name: req.body.name,
@@ -59,12 +56,14 @@ router.post('/signup', (req, res) => {
                     password: req.body.password,
                 });
                 bcrypt.genSalt(10, (err, salt) => {
-                    bcrypt.hash(newUser.password, salt, (err, hash) => {
-                        if (err) throw err;
+                    bcrypt.hash(newUser.password, salt, null, (err, hash) => {
+                        if (err) {
+                            return next(err);
+                        }
                         newUser.password = hash;
                         newUser.save()
                         .then(user => {
-                            res.redirect('/users/login')
+                            res.redirect('/user/signin')
                         })
                         .catch(err => {
                             console.log(err);
@@ -78,9 +77,9 @@ router.post('/signup', (req, res) => {
 });
 
 // Logout User
-router.get('/user/logout', (req, res) => {
+router.get('/logout', (req, res) => {
     req.logout();
-    res.redirect('/user/login');
+    res.redirect('/signin');
 });
 
 

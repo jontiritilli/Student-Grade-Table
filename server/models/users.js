@@ -16,4 +16,7 @@ const UserSchema = new Schema({
     }
 });
 
+const comparePasswords = function(){
+
+}
 mongoose.model('users', UserSchema);
