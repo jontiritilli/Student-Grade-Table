@@ -38,17 +38,18 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//set view engine
+// Set view engine
 app.set('views', path.join(__dirname, '..', 'public', 'views'));
 app.set('view engine', 'pug');
 
+// Set static folder
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // Load Routes
 const student = require('./routes/student');
 const user = require('./routes/user');
 
-//Home
+// Home
 app.get('/', (req, res) => {
     res.render('index');
 });
@@ -57,21 +58,7 @@ app.get('/', (req, res) => {
 app.use('/student', student);
 app.use('/user', user);
 
-// //Signup
-// app.get('/signup', (req, res) => {
-//     res.render('signup')
-// })
-
-// //Signin
-// app.get('/signin', (req, res) => {
-//     res.render('signin')
-// })
-
-// //Students
-// app.get('/courses', (req, res) => {
-//     res.render('courses')
-// })
-
+// Assign Port
 const PORT = process.env.PORT || 9000;
 
 //Listener
