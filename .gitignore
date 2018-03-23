@@ -2,5 +2,6 @@
 .idea
 README.md
 node_modules
-server/config
+server/config/db.js
+server/config/auth.js
 .vscode

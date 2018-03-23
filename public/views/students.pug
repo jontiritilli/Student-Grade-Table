@@ -32,9 +32,12 @@ body
                 table.student-table.table.table-hover.table-striped.table-bordered
                     thead.thead-dark
                         tr
-                            td(scope='col' info='table') Name <i class='fas fa-sort'></i>
-                            td(scope='col' info='table') Course <i class='fas fa-sort'></i>
-                            td(scope='col' info='table') Grade <i class='fas fa-sort'></i>
+                            td(scope='col' info='table') Name
+                                i.fas.fa-sort
+                            td(scope='col' info='table') Course
+                                i.fas.fa-sort
+                            td(scope='col' info='table') Grade
+                                i.fas.fa-sort
                             td(scope='col' info='table') Actions
                     each student in studentList
                         tr
