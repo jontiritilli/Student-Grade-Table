@@ -1,0 +1,32 @@
+doctype=html
+html(language=en)
+include components/_head
+body
+    include components/_navbar.pug
+    if messages
+        div.alert.alert-warning.alert-dismissible.fade.show
+            strong #{messages}
+            button.close(type='button' data-dismiss='alert' aria-label='Close')
+                span(aria-hidden='true') &times;
+    div.card.access
+        div.card-body
+            form.signup-form.col-sm-12(method='post' action='/user/signup')
+                h3.card-title.d-flex.justify-content-center Create New Account
+                div.form-group
+                    div.input-group
+                        span.input-group-addon
+                            i.input-group-text.fas.fa-envelope
+                        input.form-control.form-control-sm(type='text' name='email' id='email' placeholder='Email')
+                div.form-group
+                    div.input-group
+                        span.input-group-addon
+                            i.input-group-text.fas.fa-lock-open
+                        input.form-control.form-control-sm(type='password' name='password' id='password' placeholder='Password')
+                div.form-group
+                    div.input-group
+                        span.input-group-addon
+                            i.input-group-text.fas.fa-lock
+                        input.form-control.form-control-sm(type='password' name='confirmPassword' id='confirmPassword' placeholder='Confirm Password')
+                div.row.d-flex.justify-content-center
+                    button.btn.btn-outline-success(type='submit') Sign Up
+    include components/_modal
