@@ -12,18 +12,18 @@ const Student = mongoose.model('students');
 router.get('/list', ensureAuth, (req, res) => {
     var students = Student.find({}, (err, studentResult) => {
         if (err) {
-            req.flash('failure_msg', 'Failed to load student list. Please try reloading the page')
-            res.render('students', {message: req.flash('failure_msg')});
+            req.flash('error', 'Failed to load student list. Please try reloading the page')
+            res.render('students', {message: req.flash('error')});
         } else if (studentResult.length) {
             res.render('students', {
                 'studentList': studentResult,
                 user: req.user,
             });
         } else {
-            req.flash('failure_msg', 'Student List is empty. Please add something.')
+            req.flash('error', 'Student List is empty. Please add something.')
             res.render('students', {
                 'studentList': studentResult,
-                messages: req.flash('failure_msg')
+                messages: req.flash('error')
             })
         }
     });
@@ -48,23 +48,25 @@ router.post('/add', ensureAuth, (req, res,) => {
     }
 
     if(errors.length > 0) {
-        req.flash('failure_msg', errors)
+        req.flash('error', errors)
         res.render('students', {
-            message: req.flash('failure_msg')
+            messages: req.flash('error')
         })
     }
     newStudent.name = name;
     newStudent.course = course;
     newStudent.grade = grade;
     newStudent.save()
-        .then(student => {
-            res.redirect('/student/list');
-        })
-        .catch(err => {
+        .then(
+            res.redirect(301, '/student/list')
+        )
+        .catch(Student.find({}, (err, studentResult) => {
+            req.flash('error', 'Error adding student to database')
             res.render('students', {
-                message: req.flash('error adding student')
+                message: req.flash('error'),
+                'studentList': studentResult
             });
-        })
+        }))
 });
 
 // Delete Student
@@ -72,7 +74,7 @@ router.get('/remove/:id', ensureAuth, (req, res) => {
     console.log(req.params)
     Student.remove({_id: req.params.id})
         .then(() => {
-            req.flash('success_msg', 'Student removed');
+            req.flash('success', 'Student removed');
             res.redirect('/student/list');
         });
 });

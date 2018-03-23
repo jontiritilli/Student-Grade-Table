@@ -3,11 +3,7 @@ html(language=en)
 include components/_head
 body
     include components/_navbar.pug
-    if messages
-        div.alert.alert-warning.alert-dismissible.fade.show
-            strong #{messages}
-            button.close(type='button' data-dismiss='alert' aria-label='Close')
-                span(aria-hidden='true') &times;
+    include components/_messages
     div.card.access
         div.card-body
             form.signin-form.col-sm-12(method='post' action='/user/signin')

@@ -73,12 +73,19 @@ span.label {
     -o-transform: translateY(0%);
     transform: translateY(0%);
 }
+td[info='table'] {
+    cursor: pointer;
+}
 
+table {
+    width: 100%:
+}
 .students {
     background-color: #eeeeeefb;
     margin-bottom: 2%;
+    max-height: 37%;
 }
 
-/* .student_table {
-    background-color: #eeeeeefb;
-} */
+.student_item {
+    margin: 0;
+}
