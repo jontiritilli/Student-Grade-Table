@@ -2,12 +2,8 @@ doctype=html
 html(language=en)
 include components/_head
 body
-    include components/_navbar.pug
-    if messages
-        div.alert.alert-warning.alert-dismissible.fade.show
-            strong #{messages}
-            button.close(type='button' data-dismiss='alert' aria-label='Close')
-                span(aria-hidden='true') &times;
+    include components/_navbar
+    include components/_messages
     div.container
         div.row
             div.card.students.col-sm-12.col-lg-3.float-right
@@ -33,20 +29,20 @@ body
                             button.addButton.btn.btn-outline-success(type='submit' id='addBtn') Add Student
 
             div.col-12.col-lg-9.float-right
-                table.table.table-hover.table-striped.table-bordered
+                table.student-table.table.table-hover.table-striped.table-bordered
                     thead.thead-dark
                         tr
-                            td(scope='col') Name
-                            td(scope='col') Course
-                            td(scope='col') Grade
-                            td(scope='col') Actions
+                            td(scope='col' info='table') Name <i class='fas fa-sort'></i>
+                            td(scope='col' info='table') Course <i class='fas fa-sort'></i>
+                            td(scope='col' info='table') Grade <i class='fas fa-sort'></i>
+                            td(scope='col' info='table') Actions
                     each student in studentList
                         tr
                             td #{student.name}
                             td #{student.course}
                             td #{student.grade}
                             td
-                                form(action='/student/remove/'+ student._id method='get')
-                                    button.btn.btn-danger Delete
+                                form.student_item(action='/student/remove/'+ student._id method='get')
+                                    button.btn.btn-sm.btn-danger Delete
 
     include components/_modal

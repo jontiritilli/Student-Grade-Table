@@ -35,7 +35,8 @@ const {secret} = require('./config/auth')
 app.use(session({
     secret: secret,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: { maxAge: 30*60*1000 }
 }));
 
 // Passport Middleware

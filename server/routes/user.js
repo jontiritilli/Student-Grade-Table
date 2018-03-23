@@ -4,12 +4,12 @@ const router = express.Router();
 
 // User Signin Route
 router.get('/signin', (req, res) => {
-    res.render('signin', {message: req.flash('signupMessage')});
+    res.render('signin');
 });
 
 // User Signup Route
 router.get('/signup', (req, res) => {
-    res.render('signup')
+    res.render('signup', {message: req.flash('info')})
 })
 
 // SignIN Form POST
@@ -31,7 +31,6 @@ router.post('/signup', passport.authenticate('local-signup', {
 // Logout User
 router.get('/logout', (req, res) => {
     req.logout();
-    req.flash('success_msg', 'You are logged out');
     res.redirect('/');
 });
 

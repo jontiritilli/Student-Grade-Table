@@ -1,6 +1,8 @@
 $(document).ready(initializeApp);
 
 function initializeApp(){
+	$('.student-table').DataTable();
+	$('table').css("width",'100%')
 	validateSignIn();
 	validateSignUp();
 	validateCourses();
