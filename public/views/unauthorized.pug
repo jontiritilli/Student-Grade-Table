@@ -1,0 +1,14 @@
+doctype=html
+html(language=en)
+include components/_head
+body
+    include components/_navbar.pug
+    div.container
+        div.jumbotron
+            h1.display-3.d-flex.justify-content-center Unauthorized
+
+            p.d-flex.justify-content-center Please Sign Up or Sign In to view the students table.
+            div.lead.d-flex.justify-content-center
+                a.btn.btn-primary.btn-lg.signup(href='/user/signup') Sign Up
+                a.btn.btn-secondary.btn-lg.signin(href='/user/signin') Sign In
+    include components/_modal

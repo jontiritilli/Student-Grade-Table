@@ -3,12 +3,14 @@ html(language=en)
 include components/_head
 body
     include components/_navbar.pug
+    if messages
+        div.alert.alert-warning.alert-dismissible.fade.show
+            strong #{messages}
+            button.close(type='button' data-dismiss='alert' aria-label='Close')
+                span(aria-hidden='true') &times;
     div.container
         div.jumbotron
-            if user != null
-                h1.display-3 Welcome to #{user.username}
-            else
-                h1.display-3 Welcome to SGT
+            h1.display-3 Welcome to SGT
             p.lead This is a tool created for teachers. It can be implemented to keep track of courses, semesters, students, and assignments. It is a class leading example of back-end functionality with user friendly front-end implementation.</p>
             hr.my-4
             p This is a free tool that can be used securely from wherever you work.</p>

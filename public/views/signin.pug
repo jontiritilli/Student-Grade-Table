@@ -3,6 +3,11 @@ html(language=en)
 include components/_head
 body
     include components/_navbar.pug
+    if messages
+        div.alert.alert-warning.alert-dismissible.fade.show
+            strong #{messages}
+            button.close(type='button' data-dismiss='alert' aria-label='Close')
+                span(aria-hidden='true') &times;
     div.card.access
         div.card-body
             form.signin-form.col-sm-12(method='post' action='/user/signin')
@@ -18,5 +23,5 @@ body
                             i.input-group-text.fas.fa-lock
                         input.form-control.form-control-sm(type='password' name='password' id='password' placeholder='Password')
                 div.row.d-flex.justify-content-center
-                    button(type='submit' id='loginBtn' class='btn btn-outline-success') Sign In
+                    button.btn.btn-outline-success(type='submit') Sign In
     include components/_modal

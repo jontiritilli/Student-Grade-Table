@@ -1,10 +1,9 @@
 module.exports = {
-    ensureAuth: function (req, res, next) {
-        if (req.url === '/list' && (!req.session || !req.session.authenticated)) {
-            res.render('unauthorized', { status: 403 });
-            return;
+    ensureAuth: function  (req, res, next) {
+        if (req.isAuthenticated()) {
+            return next();
         } else {
-            res.redirect('/login');
+            res.render('unauthorized')
         }
     }
-};
+}

@@ -16,4 +16,4 @@ const StudentSchema = new Schema({
     }
 });
 
-mongoose.model('students', StudentSchema);
+mongoose.model('students', StudentSchema)

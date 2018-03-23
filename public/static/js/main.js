@@ -9,30 +9,6 @@ function initializeApp(){
 	}
 }
 
-function renderStudentOnDom(student){
-	let deleteBtn = $('<button>',{
-		text: 'Delete',
-		class:'btn btn-outline-danger',
-		on: {
-			click: function(){
-				deleteData(student);
-			}
-		}
-	});
-	let newRow = $('<tr>', {
-		class: 'student col-xs-12'
-	});
-	let newNameTH = $('<th>');
-	let newCourseTH = $('<th>');
-	let newGradeTH = $('<th>');
-	let viewBtnTH = $('<th>');
-	newRow.append(newNameTH.text(student.name));
-	newRow.append(newCourseTH.text(student.course));
-	newRow.append(newGradeTH.text(student.grade));
-	newRow.append(viewBtnTH.append(deleteBtn));
-	$('tbody').append(newRow);
-}
-
 function validateSignUp() {
 	$(".signup-form").validate({
 		rules: {
@@ -123,7 +99,7 @@ function validateSignIn() {
 function validateCourses() {
 	$(".student-add-form").validate({
 		rules: {
-			studentName: {
+			name: {
 				required: true,
 				minlength: 2
 			},
@@ -131,7 +107,7 @@ function validateCourses() {
 				required: true,
 				minlength: 2
 			},
-			studentGrade: {
+			grade: {
 				required: true,
 				min: 0,
 				max: 100
