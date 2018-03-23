@@ -5,7 +5,7 @@ const { ensureAuth } = require('../helpers/ensureAuth');
 const configDB = require('../config/db');
 
 // Load Student Model
-require('../models/Students');
+require('../models/students');
 const Student = mongoose.model('students');
 
 // Student Course Route
