@@ -2,13 +2,18 @@ doctype=html
 html(language=en)
 include components/_head
 body
+    div.background-image
     include components/_navbar.pug
+    include components/_messages.pug
     div.container
         div.jumbotron
-            h1.display-3.d-flex.justify-content-center Unauthorized
+            div.display-4.d-flex.justify-content-center Unauthorized
 
             p.d-flex.justify-content-center Please Sign Up or Sign In to view the students table.
-            div.lead.d-flex.justify-content-center
-                a.btn.btn-primary.btn-lg.signup(href='/user/signup') Sign Up
-                a.btn.btn-secondary.btn-lg.signin(href='/user/signin') Sign In
-    include components/_modal
+            p.lead.d-flex.justify-content-center
+                a.btn.btn-light.btn-lg.signup(href='/user/signup') Sign Up
+                a.btn.btn-primary.btn-lg.signin(href='/user/signin') Sign In
+            p.lead.d-flex.justify-content-end See the Github
+                a.btn.btn-secondary.btn-lg.signin(target='_blank' rel='noopener noreferrer' href='https://github.com/jontiritilli/student-grade-table')
+                    i.fab.fa-github
+    include components/_modal.pug

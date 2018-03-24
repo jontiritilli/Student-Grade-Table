@@ -1,34 +1,33 @@
 doctype=html
 html(language=en)
-include components/_head
+    include components/_head
 body
-    include components/_navbar
-    include components/_messages
+    div.background-image
+    include components/_navbar.pug
+    include components/_messages.pug
     div.container
         div.row
-            div.card.students.col-sm-12.col-lg-3.float-right
-                div.card-content
-                    form.student-add-form(method='post' action='/student/add')
-                        h4.d-flex.justify-content-center Add Student
-                        div.form-group
-                            div.input-group
-                                span.input-group-addon
-                                    i.input-group-text.fa.fa-user
-                                input.form-control.form-control-sm(type='text' name='name' id='name' placeholder='Enter Name')
-                        div.form-group
-                            div.input-group
-                                span.input-group-addon
-                                    i.input-group-text.fa.fa-list
-                                input.form-control.form-control-sm(type='text' name='course' id='course' placeholder='Enter Course')
-                        div.form-group
-                            div.input-group
-                                span.input-group-addon
-                                    i.input-group-text.fa.fa-graduation-cap
-                                input.form-control.form-control-sm(type='text' name='grade' id='grade' placeholder='Enter Grade')
-                        div.row.d-flex.justify-content-center
-                            button.addButton.btn.btn-outline-success(type='submit' id='addBtn') Add Student
-
-            div.col-12.col-lg-9.float-right
+            div.students.col-sm-12.col-lg-3.float-right
+                form.student-add-form(method='post' action='/student/add')
+                    div.card-title.d-flex.justify-content-center Add Student
+                    div.form-group
+                        div.input-group
+                            span.input-group-addon
+                                i.input-group-text.fa.fa-user
+                            input.form-control.form-control-sm(type='text' name='name' id='name' placeholder='Enter Name')
+                    div.form-group
+                        div.input-group
+                            span.input-group-addon
+                                i.input-group-text.fa.fa-list
+                            input.form-control.form-control-sm(type='text' name='course' id='course' placeholder='Enter Course')
+                    div.form-group
+                        div.input-group
+                            span.input-group-addon
+                                i.input-group-text.fa.fa-graduation-cap
+                            input.form-control.form-control-sm(type='text' name='grade' id='grade' placeholder='Enter Grade')
+                    div.row.d-flex.justify-content-center
+                        button.addButton.btn.btn-outline-success(type='submit' id='addBtn') Add Student
+            div.col-12.col-lg-9.float-right.table-div
                 table.student-table.table.table-hover.table-striped.table-bordered
                     thead.thead-dark
                         tr
@@ -47,5 +46,4 @@ body
                             td
                                 form.student_item(action='/student/remove/'+ student._id method='get')
                                     button.btn.btn-sm.btn-danger Delete
-
-    include components/_modal
+    include components/_modal.pug
