@@ -4,8 +4,7 @@
 
 .access {
     width: 80%;
-    margin-left: 10%;
-    margin-top: 10%;
+    margin: 5% 0 0 10%;
     background-color: #eeeeeefb;
 }
 
@@ -33,6 +32,25 @@ a.signin {
 .dropdown-menu {
     position: relative;
 }
+body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    background-image: url('../assets/images/classroom.jpg');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
+    /* -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px); */
+}
+.card-title {
+    font-size: 4vmin;
+}
 .modal {
     width: 100%;
     height: 100%;
@@ -52,14 +70,24 @@ a.signin {
     top: 2vmin;
     font-size: 4vmin;
 }
-
 .modalText {
     text-align: center;
     font-size: 2vmin;
 }
-
 .modalBtn {
     text-align: center;
+}
+.navbar {
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, .7);
+    background-color: rgba(255,255,255,.7);
+}
+.navbar-brand:hover {
+    text-decoration: none;
+    color: black;
+}
+.navbar-brand {
+    color: black;
+    text-decoration: none;
 }
 
 span.label {

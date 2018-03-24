@@ -1,13 +1,14 @@
 doctype=html
 html(language=en)
-include components/_head
+    include components/_head
 body
+    div.background-image
     include components/_navbar.pug
     include components/_messages
     div.card.access
         div.card-body
             form.signin-form.col-sm-12(method='post' action='/user/signin')
-                h3.card-title.d-flex.justify-content-center Sign In to Your Account
+                div.card-title.d-flex.justify-content-center Sign In to Your Account
                 div.form-group
                     div.input-group
                         span.input-group-addon
@@ -20,4 +21,6 @@ body
                         input.form-control.form-control-sm(type='password' name='password' id='password' placeholder='Password')
                 div.row.d-flex.justify-content-center
                     button.btn.btn-outline-success(type='submit') Sign In
+                div.row.d-flex.justify-content-center.my-2
+                    a(href="/user/signup") Need to set up an account?
     include components/_modal
