@@ -1,7 +1,10 @@
 $(document).ready(initializeApp);
 
 function initializeApp(){
-	$('.student-table').DataTable();
+	$('.student-table').DataTable({
+		'paging': false,
+		'info:': false
+	});
 	$('table').css("width",'100%')
 	validateSignIn();
 	validateSignUp();
