@@ -10,23 +10,31 @@ const Student = mongoose.model('students');
 
 // Student Course Route
 router.get('/list', ensureAuth, (req, res) => {
-    var students = Student.find({}, (err, studentResult) => {
-        if (err) {
-            req.flash('error', 'Failed to load student list. Please try reloading the page')
-            res.render('students', {message: req.flash('error')});
-        } else if (studentResult.length) {
+    let studentResult
+    Student.find({}, async (err, students) => {
+        studentResult = await students;
+    })
+    .then(() => {
+        if (studentResult.length) {
             res.render('students', {
                 'studentList': studentResult,
-                user: req.user,
+                messages: req.flash('info'),
+                user: req.user
             });
         } else {
-            req.flash('error', 'Student List is empty. Please add something.')
+            req.flash('info', 'Student List is empty. Please add something')
             res.render('students', {
                 'studentList': studentResult,
-                messages: req.flash('error')
+                messages: req.flash('info')
             })
         }
-    });
+    })
+    .catch(err => {
+        req.flash('info', 'Failed to load student list. Please try reloading the page')
+        res.render('students', {
+            messages: req.flash('info')
+        });
+    })
 });
 
 // Add Student
@@ -48,25 +56,23 @@ router.post('/add', ensureAuth, (req, res,) => {
     }
 
     if(errors.length > 0) {
-        req.flash('error', errors)
+        req.flash('info', errors)
         res.render('students', {
-            messages: req.flash('error')
+            messages: req.flash('info')
         })
     }
     newStudent.name = name;
     newStudent.course = course;
     newStudent.grade = grade;
     newStudent.save()
-        .then(
-            res.redirect(301, '/student/list')
-        )
-        .catch(Student.find({}, (err, studentResult) => {
-            req.flash('error', 'Error adding student to database')
-            res.render('students', {
-                message: req.flash('error'),
-                'studentList': studentResult
-            });
-        }))
+        .then(() => {
+            req.flash('info', 'Student added successfully.');
+            res.redirect(301, '/student/list');
+        })
+        .catch((err) => {
+            req.flash('info', 'Error adding student to database.');
+            res.redirect(301, '/student/list');
+        })
 });
 
 // Delete Student
@@ -74,7 +80,7 @@ router.get('/remove/:id', ensureAuth, (req, res) => {
     console.log(req.params)
     Student.remove({_id: req.params.id})
         .then(() => {
-            req.flash('success', 'Student removed');
+            req.flash('info', 'Student removed successfully.');
             res.redirect('/student/list');
         });
 });

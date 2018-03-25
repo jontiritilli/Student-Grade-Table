@@ -198,6 +198,17 @@ td[info='table']>i {
 table {
     width: 100%;
 }
+span.label {
+    position: relative;
+    /* top: -1rem; */
+    left: 1rem;
+    font-size: 0.8rem;
+    color: #FF4081;
+    -webkit-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%);
+}
 .students {
     margin-bottom: 2%;
     background-color: #eeeeeefb;
