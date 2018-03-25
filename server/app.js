@@ -62,7 +62,10 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')));
 
 // Home
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', {
+        title: 'Welcome',
+        messages: req.flash('logout')
+    });
 });
 
 // Use Routes

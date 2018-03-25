@@ -38,12 +38,16 @@ body
                             td(scope='col' info='table') Grade
                                 i.fas.fa-sort
                             td(scope='col' info='table') Actions
-                    each student in studentList
-                        tr
-                            td #{student.name}
-                            td #{student.course}
-                            td #{student.grade}
-                            td
-                                form.student_item(action='/student/remove/'+ student._id method='get')
-                                    button.btn.btn-sm.btn-danger Delete
+                    if studentList
+                        each student in studentList
+                            tr
+                                td #{student.name}
+                                td #{student.course}
+                                td #{student.grade}
+                                td
+                                    form.student_item(action='/student/remove/'+ student._id method='get')
+                                        button.btn.btn-sm.btn-danger Delete
+                    else if !studentList
+                            tr
+                                td
     include components/_modal.pug

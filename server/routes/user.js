@@ -1,15 +1,20 @@
 const express = require('express');
 const passport = require('passport');
+const { ensureAuth } = require('../helpers/ensureAuth');
 const router = express.Router();
 
 // User Signin Route
 router.get('/signin', (req, res) => {
-    res.render('signin');
+    res.render('signin', {
+        messages: req.flash('loginMessage')
+    });
 });
 
 // User Signup Route
 router.get('/signup', (req, res) => {
-    res.render('signup', {message: req.flash('info')})
+    res.render('signup', {
+        messages: req.flash('signupMessage')
+    });
 })
 
 // SignIN Form POST
@@ -29,8 +34,9 @@ router.post('/signup', passport.authenticate('local-signup', {
 }));
 
 // Logout User
-router.get('/logout', (req, res) => {
+router.get('/logout', ensureAuth, (req, res) => {
     req.logout();
+    req.flash('logout', 'Logout was successful')
     res.redirect('/');
 });
 

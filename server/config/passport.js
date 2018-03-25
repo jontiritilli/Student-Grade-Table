@@ -25,10 +25,10 @@ module.exports = function (passport) {
             if (err)
                 return done(err);
             if (!user)
-                return done(null, false, req.flash('loginMessage', 'No user found.'));
+                return done(null, false, req.flash('info', 'No user found.'));
             if (!user.comparePassword(password))
-                return done(null, false, req.flash('loginMessage', 'Oops! Email or Password Incorrect'));
-            return done(null, user);
+                return done(null, false, req.flash('info', 'Oops! Email or Password Incorrect'));
+            return done(null, user, req.flash('info', 'Login successful'));
         });
     }));
 
@@ -43,7 +43,7 @@ module.exports = function (passport) {
                 if (err)
                     return done(err);
                 if (user) {
-                    return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+                    return done(null, false, req.flash('signupMessage', 'That email is already taken'));
                 } else {
                     const newUser = new User();
                     newUser.email = email.toLowerCase();
@@ -51,7 +51,7 @@ module.exports = function (passport) {
                     newUser.save(err => {
                         if (err)
                             throw err;
-                        return done(null, newUser);
+                        return done(null, newUser, req.flash('signupMessage', 'That email is already taken'));
                     });
                 }
             });
