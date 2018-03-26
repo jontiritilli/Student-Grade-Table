@@ -8,15 +8,13 @@ nav.navbar.nav-bar.sticky-top
         ul.menu-ul.d-flex.justify-content-end
             li.nav-item
                 a.nav-link(href='/') Home
-                    span |
-            li.nav-item
-                a.nav-link(href='/user/signup') Sign Up
-                    span |
-            li.nav-item
-                a.nav-link(href='/user/signin') Sign In
-                    span |
-            li.nav-item
-                a.nav-link(href='/student/list') Student List
-                    span |
-            li.nav-item
-                a.nav-link(href='/user/logout') Logout
+            if !user
+                li.nav-item
+                    a.nav-link(href='/user/signup') Sign Up
+                li.nav-item
+                    a.nav-link(href='/user/signin') Sign In
+            if user
+                li.nav-item
+                    a.nav-link(href='/student/list') Student List
+                li.nav-item
+                    a.nav-link(href='/user/logout') Logout

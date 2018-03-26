@@ -5,6 +5,9 @@ const router = express.Router();
 
 // User Signin Route
 router.get('/signin', (req, res) => {
+    if(req.user){
+        res.redirect('/student/list');
+    }
     res.render('signin', {
         messages: req.flash('info')
     });

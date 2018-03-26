@@ -25,7 +25,8 @@ router.get('/list', ensureAuth, (req, res) => {
                 req.flash('info', 'Student List is empty. Please add something')
                 res.render('students', {
                     'studentList': studentResult,
-                    messages: req.flash('info')
+                    messages: req.flash('info'),
+                    user: req.user
                 });
             }
         }
@@ -53,7 +54,8 @@ router.post('/add', ensureAuth, (req, res,) => {
     if(errors.length > 0) {
         req.flash('info', errors)
         res.render('students', {
-            messages: req.flash('info')
+            messages: req.flash('info'),
+            user: req.user
         })
     }
     newStudent.name = name;
@@ -61,11 +63,11 @@ router.post('/add', ensureAuth, (req, res,) => {
     newStudent.grade = grade;
     newStudent.save()
         .then(() => {
-            req.flash('info', 'Student added successfully.');
+            req.flash('info', 'Student added successfully');
             res.redirect(301, '/student/list');
         })
         .catch((err) => {
-            req.flash('info', 'Error adding student to database.');
+            req.flash('info', 'Error adding student to database');
             res.redirect(301, '/student/list');
         })
 });
