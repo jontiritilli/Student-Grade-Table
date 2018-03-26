@@ -6,7 +6,7 @@ const router = express.Router();
 // User Signin Route
 router.get('/signin', (req, res) => {
     res.render('signin', {
-        messages: req.flash('loginMessage')
+        messages: req.flash('info')
     });
 });
 
