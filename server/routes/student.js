@@ -11,30 +11,25 @@ const Student = mongoose.model('students');
 // Student Course Route
 router.get('/list', ensureAuth, (req, res) => {
     let studentResult
-    Student.find({}, async (err, students) => {
-        studentResult = await students;
+    Student.find({}, (err, students) => {
+        studentResult = students;
     })
-    .then(() => {
-        if (studentResult.length) {
-            res.render('students', {
-                'studentList': studentResult,
-                messages: req.flash('info'),
-                user: req.user
-            });
-        } else {
-            req.flash('info', 'Student List is empty. Please add something')
-            res.render('students', {
-                'studentList': studentResult,
-                messages: req.flash('info')
-            })
+    .then( (studentResult) => {
+            if (studentResult.length) {
+                res.render('students', {
+                    'studentList': studentResult,
+                    messages: req.flash('info'),
+                    user: req.user
+                });
+            } else {
+                req.flash('info', 'Student List is empty. Please add something')
+                res.render('students', {
+                    'studentList': studentResult,
+                    messages: req.flash('info')
+                });
+            }
         }
-    })
-    .catch(err => {
-        req.flash('info', 'Failed to load student list. Please try reloading the page')
-        res.render('students', {
-            messages: req.flash('info')
-        });
-    })
+    )
 });
 
 // Add Student

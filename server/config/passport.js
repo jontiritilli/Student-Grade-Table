@@ -28,7 +28,7 @@ module.exports = function (passport) {
                 return done(null, false, req.flash('info', 'No user found.'));
             if (!user.comparePassword(password))
                 return done(null, false, req.flash('info', 'Oops! Email or Password Incorrect'));
-            return done(null, user, req.flash('info', 'Login successful'));
+            return done(null, user);
         });
     }));
 
@@ -51,7 +51,7 @@ module.exports = function (passport) {
                     newUser.save(err => {
                         if (err)
                             throw err;
-                        return done(null, newUser, req.flash('signupMessage', 'That email is already taken'));
+                        return done(null, newUser, req.flash('info', 'Sign Up was successful. Please login'));
                     });
                 }
             });
