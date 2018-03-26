@@ -3,7 +3,7 @@ $(document).ready(initializeApp);
 function initializeApp(){
 	$('.student-table').DataTable({
 		'paging': false,
-		'info:': false
+		'info': false
 	});
 	$('table').css("width",'100%')
 	validateSignIn();
@@ -31,7 +31,6 @@ function validateSignUp() {
 			},
 			confirmPassword: {
 				required: true,
-				minlength: 5,
 				equalTo: '#password'
 			}
 		},

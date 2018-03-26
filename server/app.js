@@ -38,6 +38,10 @@ app.use(session({
     saveUninitialized: true,
     cookie: { maxAge: 30*60*1000 }
 }));
+app.use(function(req,res,next){
+    res.locals.session = req.session;
+    next();
+});
 
 // Passport Middleware
 app.use(passport.initialize());
@@ -63,8 +67,8 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')));
 // Home
 app.get('/', (req, res) => {
     res.render('index', {
-        title: 'Welcome',
-        messages: req.flash('logout')
+        messages: req.flash('logout'),
+        user: req.user
     });
 });
 
