@@ -5,6 +5,15 @@ function initializeApp(){
 		'paging': false,
 		'info': false
 	});
+	$('.delete').on('click', () => {
+		$('.modal').show();
+		$('.modal form').attr(
+			{
+				action: event.target.getAttribute('data'),
+				method: event.target.getAttribute('data-method')
+			}
+		)
+	});
 	$('table').css("width",'100%')
 	validateSignIn();
 	validateSignUp();

@@ -8,17 +8,21 @@
 .access {
     width: 80%;
     margin: 5% 0 0 10%;
-    background-color: #eeeeeefb;
-}
-a.signin {
-    margin-left: 10px;
+    background-color: rgb(235,235,235);
+    box-shadow: 2px 4px 9px rgba(0, 0, 0, .5);
 }
 @media (min-width: 700px) {
     .access {
         width: 50%;
         margin-left: 25%;
-        background-color: #eeeeeefb;
     }
+}
+a.signin {
+    margin-left: 10px;
+}
+.alert {
+    position: absolute;
+    width: 100%;
 }
 .background-image {
     display: flex;
@@ -31,11 +35,11 @@ a.signin {
     background-position: center top;
     background-size: cover;
     background-attachment: fixed;
-    -webkit-filter: blur(2px);
-    -moz-filter: blur(2px);
-    -o-filter: blur(2px);
-    -ms-filter: blur(2px);
-    filter: blur(2px);
+    -webkit-filter: blur(8px);
+    -moz-filter: blur(8px);
+    -o-filter: blur(8px);
+    -ms-filter: blur(8px);
+    filter: blur(8px);
 }
 body {
     height: 100vh;
@@ -71,6 +75,8 @@ button:focus {
     padding-top: 32px;
     padding-bottom: 32px;
     margin-bottom: 0;
+    background-color: #d8d8d8;
+    box-shadow: 2px 4px 9px rgba(0, 0, 0, .5);
 }
 .modal {
     width: 100%;
@@ -78,14 +84,17 @@ button:focus {
     position: fixed;
     background-color: rgba(0, 0, 0, .4);
 }
+.modalCancel {
+    margin-left: 30px;
+}
 .modal-content {
-    width: 25%;
+    width: 35%;
     margin: 0 auto;
-    border-radius: 2vmin;
+    border-radius: 5px;
     transform: translate(0%, 75%);
+    background-color: #d8d8d8;
 }
 .modalHeader {
-    background-color: #6FF0F0FF;
     text-align: center;
     border-radius: 2vmin;
     top: 2vmin;
@@ -97,14 +106,16 @@ button:focus {
 }
 .modalBtn {
     text-align: center;
+    margin-bottom: 15px;
 }
 .menu-ul {
     padding: 0;
+    margin: 0 20px 0 0;
     list-style: none;
     text-decoration: none;
 }
 .menu-ul>li {
-    margin: 5px 0 0 20px;
+    margin: 0 0 0 20px;
     display: inline;
 }
 .menu-ul>li>a {
@@ -121,8 +132,8 @@ button:focus {
     color: black;
 }
 .nav-bar {
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, .7);
-    background-color: rgba(255,255,255,.7);
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, .5);
+    background-color: rgba(235,235,235,.6);
 }
 .navbar-brand {
     font-size: 1.4rem;
@@ -135,12 +146,13 @@ button:focus {
 }
 .navbar-toggler {
     position: relative;
+    padding-bottom: 0;
 }
 .navbar-toggler:focus,
 .navbar-toggler:active {
     outline: 0;
 }
-.navbar-toggler>span {
+.navbar-toggler>div>span {
    display: block;
    background-color: #444;
    height: 4px;
@@ -155,37 +167,45 @@ button:focus {
    left: 0;
    opacity: 1;
 }
-.navbar-toggler>span:nth-child(1),
-.navbar-toggler>span:nth-child(3) {
+.navbar-toggler>div>span:nth-child(1),
+.navbar-toggler>div>span:nth-child(3) {
    -webkit-transition: transform .35s ease-in-out;
    -moz-transition: transform .35s ease-in-out;
    -o-transition: transform .35s ease-in-out;
    transition: transform .35s ease-in-out;
 }
-.navbar-toggler:not(.collapsed)>span:nth-child(1) {
+.navbar-toggler:not(.collapsed)>div>span:nth-child(1) {
     position: absolute;
-    left: 25%;
-    top: 30%;
     -webkit-transform: rotate(135deg);
     -moz-transform: rotate(135deg);
     -o-transform: rotate(135deg);
     transform: rotate(135deg);
     opacity: 0.9;
 }
-.navbar-toggler:not(.collapsed)>span:nth-child(3) {
+.navbar-toggler:not(.collapsed)>div>span:nth-child(3) {
     position: absolute;
-    left: 25%;
-    top: 30%;
+    left: 1%;
+    top: 4%;
     -webkit-transform: rotate(-135deg);
     -moz-transform: rotate(-135deg);
     -o-transform: rotate(-135deg);
     transform: rotate(-135deg);
     opacity: 0.9;
 }
-.navbar-toggler:not(.collapsed)>span:nth-child(2) {
+.navbar-toggler:not(.collapsed)>div>span:nth-child(2) {
     height: 12px;
     visibility: hidden;
     background-color: transparent;
+}
+.navbar .menu-container {
+    display: flex;
+    margin-right: 30px;
+}
+.navbar .collapse.show {
+    display: inline-flex;
+}
+.navbar .span-container {
+    position: relative;
 }
 td[info='table'] {
     cursor: pointer;
@@ -194,12 +214,16 @@ td[info='table']>i {
     margin-left: 10%;
 }
 .table-div {
-    background-color: #eeeeeefb;
+    background-color: rgb(235,235,235);
     border: 1px solid rgba(0,0,0,.125);
     border-radius: .25rem;
+    box-shadow: 2px 4px 9px rgba(0, 0, 0, .5);
 }
 table {
     width: 100%;
+}
+.table-hover tbody tr:hover {
+    background-color: rgba(88,181,251,.3)
 }
 span.label {
     position: relative;
@@ -214,17 +238,14 @@ span.label {
 }
 .students {
     margin-bottom: 2%;
-    background-color: #eeeeeefb;
+    background-color: rgb(235,235,235);
     border: 1px solid rgba(0,0,0,.125);
     border-radius: .25rem;
+    box-shadow: 2px 4px 9px rgba(0, 0, 0, .5);
 }
 @media (min-width: 992px){
     .students {
         max-height: 40%;
-        margin-bottom: 2%;
-        background-color: #eeeeeefb;
-        border: 1px solid rgba(0,0,0,.125);
-        border-radius: .25rem;
     }
 }
 .student_item {

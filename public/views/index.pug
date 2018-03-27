@@ -1,6 +1,6 @@
 doctype=html
 html(language=en)
-    include components/_head
+    include components/_head.pug
 body
     div.background-image
     include components/_navbar.pug
@@ -11,7 +11,10 @@ body
             p.lead Student Grade Manager is an example of Pug server-side rendering with NodeJS, Express, MongoDB incorporation, and Passport Local Authentication. Please Sign Up and explore.
             p.lead.d-flex.justify-content-center
                 a.btn.btn-light.btn-lg.signup(href='/user/signup') Sign Up
-                a.btn.btn-primary.btn-lg.signin(href='/user/signin') Sign In
+                if !user
+                    a.btn.btn-primary.btn-lg.signin(href='/user/signin') Sign In
+                else
+                    a.btn.btn-primary.btn-lg.signin(href='/student/list') Student List
             p.lead.d-flex.justify-content-end See the Github
                 a.btn.btn-secondary.btn-lg.signin(target='_blank' rel='noopener noreferrer' href='https://github.com/jontiritilli/student-grade-table')
                     i.fab.fa-github
