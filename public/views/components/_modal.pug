@@ -1,5 +1,10 @@
 div.modal
     div.modal-content.row
-        div.modalHeader.modal-header.align-middle
-        div.modalText.align-middle.modal-body
-        div.modalBtn: button.btn.tn-danger(onclick="$('.modal').fadeOut()") Close
+        div.modalHeader.modal-header.d-flex.justify-content-center
+            h3 Confirm Deletion
+        div.modalText.modal-body.d-flex.justify-content-center
+            p This will <strong> permanently </strong> remove this student
+        div.modalBtn
+            form(action='', method='')
+                button.btn.btn-danger(type='submit' onclick="$('.modal').fadeOut()") Confirm
+                button.btn.btn-success.modalCancel(type='button' onclick="$('.modal').fadeOut()") Cancel

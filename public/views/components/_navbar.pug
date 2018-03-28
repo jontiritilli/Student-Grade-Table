@@ -1,20 +1,22 @@
 nav.navbar.nav-bar.sticky-top
     a.navbar-brand(href='/') Student Grade Manager
-    button.navbar-toggler.navbar-toggler-right.collapsed(type="button" data-toggle="collapse" data-target="#navbarToggleTarget" aria-controls="navbarToggleTarget" aria-expanded="false" aria-label="Toggle navigation")
-        span
-        span
-        span
-    div.collapse.navbar-collapse(id='navbarToggleTarget')
-        ul.menu-ul.d-flex.justify-content-end
-            li.nav-item
-                a.nav-link(href='/') Home
-            if !user
+    button.navbar-toggler.collapsed(type="button" data-toggle="collapse" data-target="#navbarToggleTarget" aria-controls="navbarToggleTarget" aria-expanded="false" aria-label="Toggle navigation")
+        div.span-container
+            span
+            span
+            span
+    div.menu-container
+        div.collapse.navbar-collapse(id='navbarToggleTarget')
+            ul.menu-ul.d-flex.justify-content-end
                 li.nav-item
-                    a.nav-link(href='/user/signup') Sign Up
-                li.nav-item
-                    a.nav-link(href='/user/signin') Sign In
-            if user
-                li.nav-item
-                    a.nav-link(href='/student/list') Student List
-                li.nav-item
-                    a.nav-link(href='/user/logout') Logout
+                    a.nav-link(href='/') Home
+                if !user
+                    li.nav-item
+                        a.nav-link(href='/user/signup') Sign Up
+                    li.nav-item
+                        a.nav-link(href='/user/signin') Sign In
+                if user
+                    li.nav-item
+                        a.nav-link(href='/student/list') Student List
+                    li.nav-item
+                        a.nav-link(href='/user/logout') Logout
