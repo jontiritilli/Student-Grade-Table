@@ -1,5 +1,10 @@
 nav.navbar.nav-bar.sticky-top
     a.navbar-brand(href='/') Student Grade Manager
+    button.navbar-toggler.collapsed(type="button" data-toggle="collapse" data-target="#navbarToggleTarget" aria-controls="navbarToggleTarget" aria-expanded="false" aria-label="Toggle navigation")
+        div.span-container
+            span
+            span
+            span
     div.menu-container
         div.collapse.navbar-collapse(id='navbarToggleTarget')
             ul.menu-ul.d-flex.justify-content-end
@@ -15,8 +20,3 @@ nav.navbar.nav-bar.sticky-top
                         a.nav-link(href='/student/list') Student List
                     li.nav-item
                         a.nav-link(href='/user/logout') Logout
-    button.navbar-toggler.collapsed(type="button" data-toggle="collapse" data-target="#navbarToggleTarget" aria-controls="navbarToggleTarget" aria-expanded="false" aria-label="Toggle navigation")
-        div.span-container
-            span
-            span
-            span
