@@ -66,7 +66,8 @@ button:focus {
     font-size: 1.8rem;
 }
 #DataTables_Table_0_wrapper {
-    padding-left: 0;
+    padding: 0;
+    margin: auto;
 }
 .fa-bars {
     font-size: 4.5vmin;
@@ -84,15 +85,24 @@ button:focus {
     position: fixed;
     background-color: rgba(0, 0, 0, .4);
 }
+.modal p {
+    font-size: 1.25rem;
+}
 .modalCancel {
-    margin-left: 30px;
+    margin-left: 4%;
 }
 .modal-content {
-    width: 35%;
+    width: 50%;
     margin: 0 auto;
     border-radius: 5px;
     transform: translate(0%, 75%);
     background-color: #d8d8d8;
+}
+@media (max-width: 700px) {
+    .modal-content {
+        width: 75%;
+        transform: translate(0%, 25%);
+    }
 }
 .modalHeader {
     text-align: center;
@@ -199,10 +209,20 @@ button:focus {
     transform: rotate(-135deg);
     opacity: 0.9;
 }
+.navbar-toggler>div>span:nth-child(2) {
+    -webkit-transition: transform .35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -moz-transition: transform .35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -o-transition: transform .35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform .35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 .navbar-toggler:not(.collapsed)>div>span:nth-child(2) {
     height: 12px;
     visibility: hidden;
     background-color: transparent;
+    -webkit-transform: rotate(-360deg);
+    -moz-transform: rotate(-360deg);
+    -o-transform: rotate(-360deg);
+    transform: rotate(-360deg);
 }
 .navbar .menu-container {
     display: flex;
@@ -231,6 +251,9 @@ table {
 }
 .table-hover tbody tr:hover {
     background-color: rgba(88,181,251,.3)
+}
+table td:nth-of-type(3) {
+    width: 80px !important;
 }
 span.label {
     position: relative;
