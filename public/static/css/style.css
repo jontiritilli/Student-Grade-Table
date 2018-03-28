@@ -70,7 +70,7 @@ button:focus {
     font-size: 4.5vmin;
 }
 .git-btn>a {
-    margin-left: auto;
+    margin-left: 30%;
 }
 .git-btn>p {
     margin: auto;
