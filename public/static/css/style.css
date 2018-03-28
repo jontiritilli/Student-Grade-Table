@@ -17,9 +17,6 @@
         margin-left: 25%;
     }
 }
-a.signin {
-    margin-left: 10px;
-}
 .alert {
     position: absolute;
     width: 100%;
@@ -71,6 +68,12 @@ button:focus {
 }
 .fa-bars {
     font-size: 4.5vmin;
+}
+.git-btn>a {
+    margin-left: auto;
+}
+.git-btn>p {
+    margin: auto;
 }
 .jumbotron {
     padding-top: 32px;
@@ -254,6 +257,9 @@ table {
 }
 table td:nth-of-type(3) {
     width: 80px !important;
+}
+.signin {
+    margin-left: 20px;
 }
 span.label {
     position: relative;
