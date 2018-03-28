@@ -53,7 +53,7 @@ button:focus {
     outline: 0;
 }
 .container {
-    margin-top: 5%;
+    margin-top: 75px;
     position: relative;
 }
 .centered-container {
