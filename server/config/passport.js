@@ -51,7 +51,7 @@ module.exports = function (passport) {
                     newUser.save(err => {
                         if (err)
                             throw err;
-                        return done(null, newUser, req.flash('info', 'Sign Up was successful. Please login'));
+                        return done(null, newUser, req.flash('info', 'Account created successfully'));
                     });
                 }
             });

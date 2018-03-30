@@ -45,8 +45,10 @@ router.post('/add', ensureAuth, (req, res,) => {
     if(!course && course.length < 2){
         errors.push('Please enter a name with at least 2 letters')
     }
-    if(!grade && grade.length < 1 || grade > 100 || grade < 0){
-        errors.push('Please enter a name with at least 2 letters')
+    if(!grade && grade.length < 1 || grade.length > 5){
+        errors.push('Please enter at least one number, no more than 4')
+    } else if (typeof grade !== Number){
+        errors.push('Please enter only numbers')
     } else if (grade > 100 || grade < 0){
         errors.push('Please enter a grade between 0 - 100')
     }
