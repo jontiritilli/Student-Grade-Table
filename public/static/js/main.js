@@ -24,12 +24,11 @@ function initializeApp(){
 		return this.optional(element) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$/.test(value);
 	}
 	$.validator.addMethod("whitespace", function(value, element){
-		if (/\s/.test(value)) {
-			return false;  // FAIL validation when REGEX matches
-		} else {
-			return true;   // PASS validation otherwise
-		};
+		return this.optional(element) || /\s$/.test(value)
 	}, "whitespace test");
+    $.validator.addMethod("lettersOnly", function (value, element) {
+      return this.optional(element) || /^([a-zA-Z0-9]+\s?[a-zA-Z0-9]*)$/.test(value)
+	}, "Alpha only");
 }
 
 function validateSignUp() {
@@ -131,16 +130,19 @@ function validateCourses() {
 		rules: {
 			name: {
 				required: true,
-				whitespace: true,
+				maxlength: 20,
+				lettersOnly: true,
 				minlength: 2
 			},
 			course: {
 				required: true,
-				whitespace: true,
+				maxlength: 20,
+				lettersOnly: true,
 				minlength: 2
 			},
 			grade: {
 				required: true,
+				number: true,
 				maxlength: 5,
 				min: 0,
 				max: 100
@@ -150,16 +152,19 @@ function validateCourses() {
 		messages: {
 			name: {
 				required: 'This field is required',
-				whitespace: 'spaces are not valid characters',
+				maxlength: 'Maximum of 20 characters',
+				lettersOnly: 'Invalid input',
 				minlength: 'Enter at least 2 letters'
 			},
 			course: {
 				required: 'This field is required',
-				whitespace: 'spaces are not valid characters',
+				maxlength: 'Maximum of 20 characters',
+				lettersOnly: 'Invalid input',
 				minlength: 'Enter at least 2 letters'
 			},
 			grade: {
 				required: 'This field is required',
+				number: 'Enter only numbers',
 				maxlength: 'Max decimals is two (99.99)',
 				min: 'Enter a number between 0 - 100',
 				max: 'Enter a number between 0 - 100'
