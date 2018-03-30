@@ -5,7 +5,8 @@ function initializeApp(){
 		'paging': false,
 		'info': false
 	});
-	$('.delete').on('click', () => {
+	$('.delete').on('click', (event) => {
+		console.log(event.target);
 		$('.modal').show();
 		$('.modal form').attr(
 			{
@@ -13,6 +14,7 @@ function initializeApp(){
 				method: event.target.getAttribute('data-method')
 			}
 		)
+		$('.modal .studentName').text(event.target.getAttribute('name'));
 	});
 	$('table').css("width",'100%')
 	validateSignIn();
@@ -21,6 +23,13 @@ function initializeApp(){
 	$.validator.methods.email = function (value, element) {
 		return this.optional(element) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$/.test(value);
 	}
+	$.validator.addMethod("whitespace", function(value, element){
+		if (/\s/.test(value)) {
+			return false;  // FAIL validation when REGEX matches
+		} else {
+			return true;   // PASS validation otherwise
+		};
+	}, "whitespace test");
 }
 
 function validateSignUp() {
@@ -32,10 +41,12 @@ function validateSignUp() {
 			},
 			email: {
 				required: true,
+				whitespace: true,
 				email: true
 			},
 			password: {
 				required: true,
+				whitespace: true,
 				minlength: 5
 			},
 			confirmPassword: {
@@ -51,10 +62,12 @@ function validateSignUp() {
 			},
 			email: {
 				required: 'This Field is Required',
+				whitespace: 'spaces are not valid characters',
 				email: 'Valid email required'
 			},
 			password: {
 				required: 'This Field is Required',
+				whitespace: 'spaces are not valid characters',
 				minlength: 'Password must be at least 5 characters'
 			},
 			confirmPassword: {
@@ -79,23 +92,27 @@ function validateSignIn() {
 		rules: {
 			email: {
 				required: true,
+				whitespace: true,
 				email: true
 			},
 			password: {
 				required: true,
+				whitespace: true,
 				minlength: 5
-			}
+			},
 		},
 		//For custom messages
 		messages: {
 			email: {
-				required: 'Please provide an email',
+				required: 'This Field is Required',
+				whitespace: 'spaces are not valid characters',
 				email: 'Valid email required'
 			},
 			password: {
-				required: 'Please choose a password',
+				required: 'This Field is Required',
+				whitespace: 'spaces are not valid characters',
 				minlength: 'Password must be at least 5 characters'
-			}
+			},
 		},
 		errorElement: 'span',
 		errorClass: 'label',
@@ -114,32 +131,38 @@ function validateCourses() {
 		rules: {
 			name: {
 				required: true,
+				whitespace: true,
 				minlength: 2
 			},
 			course: {
 				required: true,
+				whitespace: true,
 				minlength: 2
 			},
 			grade: {
 				required: true,
+				maxlength: 5,
 				min: 0,
 				max: 100
 			}
 		},
 		//For custom messages
 		messages: {
-			studentName: {
+			name: {
 				required: 'This field is required',
-				minlength: 'Please enter at least 2 letters'
+				whitespace: 'spaces are not valid characters',
+				minlength: 'Enter at least 2 letters'
 			},
 			course: {
 				required: 'This field is required',
-				minlength: 'Please enter at least 2 letters'
+				whitespace: 'spaces are not valid characters',
+				minlength: 'Enter at least 2 letters'
 			},
-			studentGrade: {
+			grade: {
 				required: 'This field is required',
-				min: 'Please enter a number 0 - 100',
-				max: 'Please enter a number 0 - 100'
+				maxlength: 'Max decimals is two (99.99)',
+				min: 'Enter a number between 0 - 100',
+				max: 'Enter a number between 0 - 100'
 			}
 		},
 		errorElement: 'span',

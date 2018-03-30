@@ -69,6 +69,11 @@ button:focus {
 .fa-bars {
     font-size: 4.5vmin;
 }
+@media (min-width: 992px) {
+    .form-group {
+        margin-bottom: 1.6rem;
+    }
+}
 .git-btn>a {
     margin-left: 30%;
 }
@@ -262,8 +267,7 @@ table td:nth-of-type(3) {
     margin-left: 20px;
 }
 span.label {
-    position: relative;
-    /* top: -1rem; */
+    position: absolute;
     left: 1rem;
     font-size: 0.8rem;
     color: #FF4081;
@@ -281,7 +285,7 @@ span.label {
 }
 @media (min-width: 992px){
     .students {
-        max-height: 40%;
+        max-height: 44%;
     }
 }
 .student_item {
