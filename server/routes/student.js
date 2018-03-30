@@ -47,18 +47,13 @@ router.post('/add', ensureAuth, (req, res,) => {
     }
     if(!grade && grade.length < 1 || grade.length > 5){
         errors.push('Please enter at least one number, no more than 4')
-    } else if (typeof grade !== Number){
-        errors.push('Please enter only numbers')
     } else if (grade > 100 || grade < 0){
         errors.push('Please enter a grade between 0 - 100')
     }
 
     if(errors.length > 0) {
         req.flash('info', errors)
-        res.render('students', {
-            messages: req.flash('info'),
-            user: req.user
-        })
+        res.redirect('students')
     }
     newStudent.name = name;
     newStudent.course = course;

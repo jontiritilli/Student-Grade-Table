@@ -24,7 +24,7 @@ function initializeApp(){
 		return this.optional(element) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$/.test(value);
 	}
 	$.validator.addMethod("whitespace", function(value, element){
-		return this.optional(element) || /\s$/.test(value)
+		return this.optional(element) || /^\S+$/.test(value)
 	}, "whitespace test");
     $.validator.addMethod("lettersOnly", function (value, element) {
       return this.optional(element) || /^([a-zA-Z0-9]+\s?[a-zA-Z0-9]*)$/.test(value)
@@ -61,12 +61,12 @@ function validateSignUp() {
 			},
 			email: {
 				required: 'This Field is Required',
-				whitespace: 'spaces are not valid characters',
+				whitespace: 'Spaces are not valid characters',
 				email: 'Valid email required'
 			},
 			password: {
 				required: 'This Field is Required',
-				whitespace: 'spaces are not valid characters',
+				whitespace: 'Spaces are not valid characters',
 				minlength: 'Password must be at least 5 characters'
 			},
 			confirmPassword: {
@@ -104,12 +104,12 @@ function validateSignIn() {
 		messages: {
 			email: {
 				required: 'This Field is Required',
-				whitespace: 'spaces are not valid characters',
+				whitespace: 'Spaces are not valid characters',
 				email: 'Valid email required'
 			},
 			password: {
 				required: 'This Field is Required',
-				whitespace: 'spaces are not valid characters',
+				whitespace: 'Spaces are not valid characters',
 				minlength: 'Password must be at least 5 characters'
 			},
 		},
