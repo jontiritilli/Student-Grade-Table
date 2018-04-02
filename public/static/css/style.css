@@ -283,11 +283,26 @@ span.label {
     border-radius: .25rem;
     box-shadow: 2px 4px 9px rgba(0, 0, 0, .5);
 }
-@media (min-width: 992px){
+@media (min-width: 992px) {
     .students {
         max-height: 44%;
     }
 }
 .student_item {
     margin: 0;
+}
+/* iPhone4 media queries */
+@media (max-width: 350px) {
+    tr[role='row']>td:nth-of-type(1) {
+        word-break: break-word;
+    }
+    tr[role='row']>td:nth-of-type(2) {
+        word-break: break-word;
+    }
+    table td:nth-of-type(3) {
+        width: 50px !important;
+    }
+    .table td, .table th {
+        padding: .5rem;
+    }
 }
