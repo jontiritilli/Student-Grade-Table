@@ -1,13 +1,14 @@
 $(document).ready(initializeApp);
 
 function initializeApp(){
+  //initialize datatable plugin
 	$('.student-table').DataTable({
 		'paging': false,
 		'info': false
-	});
+  });
+  //modal click handler for delete
 	$('.delete').on('click', (event) => {
-		console.log(event.target);
-		$('.modal').show();
+		$('.messageModal').show();
 		$('.modal form').attr(
 			{
 				action: event.target.getAttribute('data'),
@@ -15,8 +16,41 @@ function initializeApp(){
 			}
 		)
 		$('.modal .studentName').text(event.target.getAttribute('name'));
-	});
-	$('table').css("width",'100%')
+  });
+
+  //modal click handler for update
+	$('.update').on('click', (e) => {
+    let target = e.target;
+
+    $('.updateModal').show();
+
+		$('.update-student-form').attr(
+			{
+				action: target.getAttribute('data'),
+				method: target.getAttribute('data-method')
+			}
+		)
+    let data = JSON.parse(target.getAttribute('name'));
+
+    let { name, course, grade } = data;
+
+    $('.updateModal #name').val(name);
+
+    $('.updateModal #course').val(course);
+
+    $('.updateModal #grade').val(grade);
+  });
+
+  window.addEventListener('orientationchange', function(){
+    setTimeout(tableSizing, 100)
+  });
+  //modify table plugin to fill screen
+  function tableSizing(){
+    let max_width = $('table').parent().width();
+    $('table').css("width", max_width);
+  }
+
+  //initialize validation
 	validateSignIn();
 	validateSignUp();
 	validateCourses();
@@ -126,7 +160,7 @@ function validateSignIn() {
 }
 
 function validateCourses() {
-	$(".student-add-form").validate({
+	$(".student-add-form, .updateModal").validate({
 		rules: {
 			name: {
 				required: true,
