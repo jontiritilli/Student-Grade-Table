@@ -75,14 +75,14 @@ router.get('/remove/:id', ensureAuth, (req, res) => {
     Student.remove({_id: req.params.id})
         .then(() => {
             req.flash('info', 'Student removed successfully.');
-            res.redirect('/student/list');
+            res.redirect(301, '/student/list');
         });
 });
 
 // Edit Student
 router.post('/update/:id', ensureAuth, (req, res) => {
   let errors = [];
-
+  console.log('posting')
   const { name, course, grade } = req.body;
 
   if(!name || name.length < 2){
@@ -99,17 +99,17 @@ router.post('/update/:id', ensureAuth, (req, res) => {
 
   if(errors.length > 0) {
       req.flash('info', errors)
-      res.redirect('/student/list')
+      res.redirect(301, '/student/list');
   }
   const id = req.params.id;
 
   Student.findByIdAndUpdate(id, {$set: {name: name, course: course, grade: grade}}, {new: true}, (err, student) => {
     if(err){
       res.flash('info', err);
-      res.redirect('/student/list');
+      res.redirect(301, '/student/list');
     };
     req.flash('info', 'Student updated successfully.');
-    res.redirect('/student/list');
+    res.redirect(301, '/student/list');
   });
 })
 module.exports = router;

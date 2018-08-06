@@ -41,14 +41,21 @@ function initializeApp(){
     $('.updateModal #grade').val(grade);
   });
 
+  $(window).on('resize', function(){
+    setTimeout(function(){
+        let max_width = $('table').parent().width();
+        console.log(max_width);
+        $('table').css("width", max_width);
+      }, 75)
+  });
   window.addEventListener('orientationchange', function(){
-    setTimeout(tableSizing, 100)
+    setTimeout(
+      function tableSizing(){
+        let max_width = $('table').parent().width();
+        $('table').css("width", max_width);
+      }, 100)
   });
   //modify table plugin to fill screen
-  function tableSizing(){
-    let max_width = $('table').parent().width();
-    $('table').css("width", max_width);
-  }
 
   //initialize validation
 	validateSignIn();
