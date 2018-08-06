@@ -80,6 +80,9 @@ button:focus {
 .git-btn>p {
     margin: auto;
 }
+.input-group {
+  margin: 15px 0;
+}
 .jumbotron {
     padding-top: 32px;
     padding-bottom: 32px;
@@ -305,4 +308,7 @@ span.label {
     .table td, .table th {
         padding: .5rem;
     }
+}
+.update {
+  margin-left: 10px;
 }

@@ -39,13 +39,14 @@ router.post('/add', ensureAuth, (req, res,) => {
 
     const { name, course, grade }= req.body
     const newStudent = new Student();
-    if(!name && name.length < 2){
+
+    if(!name || name.length < 2){
         errors.push('Please enter a name with at least 2 letters')
     }
-    if(!course && course.length < 2){
+    if(!course || course.length < 2){
         errors.push('Please enter a name with at least 2 letters')
     }
-    if(!grade && grade.length < 1 || grade.length > 5){
+    if(!grade || grade.length < 1 || grade.length > 5){
         errors.push('Please enter at least one number, no more than 4')
     } else if (grade > 100 || grade < 0){
         errors.push('Please enter a grade between 0 - 100')
@@ -57,7 +58,7 @@ router.post('/add', ensureAuth, (req, res,) => {
     }
     newStudent.name = name;
     newStudent.course = course;
-    newStudent.grade = grade;
+    newStudent.grade = grade.toFixed(2);
     newStudent.save()
         .then(() => {
             req.flash('info', 'Student added successfully');
@@ -71,7 +72,6 @@ router.post('/add', ensureAuth, (req, res,) => {
 
 // Delete Student
 router.get('/remove/:id', ensureAuth, (req, res) => {
-    console.log(req.params)
     Student.remove({_id: req.params.id})
         .then(() => {
             req.flash('info', 'Student removed successfully.');
@@ -79,4 +79,37 @@ router.get('/remove/:id', ensureAuth, (req, res) => {
         });
 });
 
+// Edit Student
+router.post('/update/:id', ensureAuth, (req, res) => {
+  let errors = [];
+
+  const { name, course, grade } = req.body;
+
+  if(!name || name.length < 2){
+      errors.push('Please enter a name with at least 2 letters')
+  }
+  if(!course || course.length < 2){
+      errors.push('Please enter a name with at least 2 letters')
+  }
+  if(!grade || grade.length < 1 || grade.length > 5){
+      errors.push('Please enter at least one number, no more than 4')
+  } else if (grade > 100 || grade < 0){
+      errors.push('Please enter a grade between 0 - 100')
+  }
+
+  if(errors.length > 0) {
+      req.flash('info', errors)
+      res.redirect('/student/list')
+  }
+  const id = req.params.id;
+
+  Student.findByIdAndUpdate(id, {$set: {name: name, course: course, grade: grade}}, {new: true}, (err, student) => {
+    if(err){
+      res.flash('info', err);
+      res.redirect('/student/list');
+    };
+    req.flash('info', 'Student updated successfully.');
+    res.redirect('/student/list');
+  });
+})
 module.exports = router;

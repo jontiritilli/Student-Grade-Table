@@ -1,0 +1,23 @@
+
+form.update-student-form(action='', method='')
+  div.updateModal.modal
+    div.modal-content.row
+      div.modalHeader.modal-header.d-flex.justify-content-center
+        h3 Confirm Deletion
+      div.modalBody.modal-body
+        div.form-group.one
+          div.input-group
+            span.input-group-addon
+              i.input-group-text.fa.fa-user
+            input.form-control.form-control-sm(type='text' name='name' id='name' placeholder='Enter New Name')
+          div.input-group
+            span.input-group-addon
+              i.input-group-text.fa.fa-list
+            input.form-control.form-control-sm(type='text' name='course' id='course' placeholder='Enter New Course')
+          div.input-group
+            span.input-group-addon
+              i.input-group-text.fa.fa-graduation-cap
+            input.form-control.form-control-sm(type='text' name='grade' id='grade' placeholder='Enter New Grade')
+        div.modalBtn
+          button.btn.btn-warning(type='submit' onclick="$('.modal').fadeOut()") Confirm
+          button.btn.btn-success.modalCancel(type='button' onclick="$('.modal').fadeOut()") Cancel
