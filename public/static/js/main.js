@@ -24,12 +24,6 @@ function initializeApp(){
 
     $('.updateModal').show();
 
-		$('.update-student-form').attr(
-			{
-				action: target.getAttribute('data'),
-				method: target.getAttribute('data-method')
-			}
-		)
     let data = JSON.parse(target.getAttribute('name'));
 
     let { _id, name, course, grade } = data;
