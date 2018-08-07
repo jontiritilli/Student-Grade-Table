@@ -27,15 +27,14 @@ function initializeApp(){
     let data = JSON.parse(target.getAttribute('name'));
 
     let { _id, name, course, grade } = data;
-    console.log(data)
+
+    $('.update-student-form').attr('action', '/student/update/'+_id)
 
     $('.updateModal #name').val(name);
 
     $('.updateModal #course').val(course);
 
     $('.updateModal #grade').val(grade);
-
-    $('.updateModal #studentId').val(_id);
   });
 
   $(window).on('resize', function(){
