@@ -46,7 +46,7 @@ body
                                 td #{student.grade}
                                 td
                                     button.btn.btn-sm.btn-danger.delete(data='/student/remove/'+ student._id data-method='get' name=student.name) Delete
-                                    button.btn.btn-sm.btn-warning.update(data='/student/update/'+ student._id data-method='post' name=student) Edit
+                                    button.btn.btn-sm.btn-warning.update(data='/student/update/' data-method='post' name=student) Edit
                     else if !studentList
                             tr
                                 td

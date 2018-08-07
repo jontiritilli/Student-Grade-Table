@@ -32,13 +32,16 @@ function initializeApp(){
 		)
     let data = JSON.parse(target.getAttribute('name'));
 
-    let { name, course, grade } = data;
+    let { _id, name, course, grade } = data;
+    console.log(data)
 
     $('.updateModal #name').val(name);
 
     $('.updateModal #course').val(course);
 
     $('.updateModal #grade').val(grade);
+
+    $('.updateModal #studentId').val(_id);
   });
 
   $(window).on('resize', function(){

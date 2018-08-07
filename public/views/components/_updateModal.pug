@@ -3,7 +3,7 @@ form.update-student-form(action='', method='')
   div.updateModal.modal
     div.modal-content.row
       div.modalHeader.modal-header.d-flex.justify-content-center
-        h3 Confirm Deletion
+        h3 Enter Updated Information
       div.modalBody.modal-body
         div.form-group.one
           div.input-group
@@ -18,6 +18,7 @@ form.update-student-form(action='', method='')
             span.input-group-addon
               i.input-group-text.fa.fa-graduation-cap
             input.form-control.form-control-sm(type='text' name='grade' id='grade' placeholder='Enter New Grade')
+          input.id(type="hidden" name='studentId' id='studentId')
         div.modalBtn
           button.btn.btn-warning(type='submit' onclick="$('.modal').fadeOut()") Confirm
           button.btn.btn-success.modalCancel(type='button' onclick="$('.modal').fadeOut()") Cancel
