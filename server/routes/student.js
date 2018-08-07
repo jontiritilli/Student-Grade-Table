@@ -80,10 +80,9 @@ router.get('/remove/:id', ensureAuth, (req, res) => {
 });
 
 // Edit Student
-router.post('/update/:id', ensureAuth, (req, res) => {
+router.post('/update', ensureAuth, (req, res) => {
   let errors = [];
-  console.log('posting')
-  const { name, course, grade } = req.body;
+  const { studentId, name, course, grade } = req.body;
 
   if(!name || name.length < 2){
       errors.push('Please enter a name with at least 2 letters')
@@ -101,9 +100,8 @@ router.post('/update/:id', ensureAuth, (req, res) => {
       req.flash('info', errors)
       res.redirect(301, '/student/list');
   }
-  const id = req.params.id;
 
-  Student.findByIdAndUpdate(id, {$set: {name: name, course: course, grade: grade}}, {new: true}, (err, student) => {
+  Student.findByIdAndUpdate(studentId, {$set: {name: name, course: course, grade: grade}}, {new: true}, (err, student) => {
     if(err){
       res.flash('info', err);
       res.redirect(301, '/student/list');
