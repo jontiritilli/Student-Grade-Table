@@ -21,7 +21,7 @@ const configDB = require('./config/db');
 
 //Mongoose Middleware
 mongoose.Promise = global.Promise;
-mongoose.connect(configDB.URI)
+mongoose.connect(configDB.URI, { useNewUrlParser: true })
     .then(() => {console.log('mLab is connected')})
     .catch(err => {console.log('error connecting to the database', err.message)});
 
